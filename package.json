@@ -1,0 +1,29 @@
+{
+  "name": "technicianhub-v1",
+  "version": "1.0.0",
+  "description": "Technicians HUB is a web platform designed to connect users with skilled technicians effortlessly",
+  "main": "index.js",
+  "scripts": {
+    "test": "",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehabsmh/technicianHUB-v1.git"
+  },
+  "author": "Ehab Elsayed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehabsmh/technicianHUB-v1/issues"
+  },
+  "homepage": "https://github.com/ehabsmh/technicianHUB-v1#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "joi": "^17.13.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
