@@ -2,6 +2,7 @@
   "name": "technicianhub-v1",
   "version": "1.0.0",
   "description": "Technicians HUB is a web platform designed to connect users with skilled technicians effortlessly",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "",
