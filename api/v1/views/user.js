@@ -1,11 +1,9 @@
 import express from 'express'
 import User from '../../../models/users.js';
+import { getUsers } from '../../../Controllers/user.js';
 
 const userRouter = express.Router();
 
-userRouter.get('/users', async (req, res) => {
-  const users = await User.find({ role: 'user' });
-  res.json(users);
-});
+userRouter.get('/users', getUsers);
 
 export default userRouter;
