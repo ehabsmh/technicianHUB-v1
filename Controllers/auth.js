@@ -1,5 +1,5 @@
 import User from "../models/users.js"
-import bcrypt from 'bcrypt'
+import { hashSync, compareSync } from 'bcrypt'
 
 
 export const register = async (req, res) => {
@@ -12,7 +12,7 @@ export const register = async (req, res) => {
 
     try {
         let newUser;
-        const hashed_pw = bcrypt.hashSync(password, saltRounds);
+        const hashed_pw = hashSync(password, saltRounds);
 
         if (role === 'user') {
             newUser = new User({
@@ -55,7 +55,7 @@ export const login = async (req, res) => {
     }
     const user = await User.findOne({ email });
 
-    if (!user || !bcrypt.compareSync(password, user.password)) {
+    if (!user || !compareSync(password, user.password)) {
         return res.status(404).json({ "error": "Incorrect email or password" });
     }
 
