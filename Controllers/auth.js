@@ -1,4 +1,6 @@
-import User from "../models/users.js";
+import User from "../models/users.js"
+import bcrypt from 'bcrypt'
+
 
 export const register = async (req, res) => {
     const { firstName, lastName, email, password, phone, address,
@@ -6,12 +8,15 @@ export const register = async (req, res) => {
 
     const [mm, dd, yyyy] = birthDate.split('-');
 
+    const saltRounds = 10;
+
     try {
         let newUser;
+        const hashed_pw = bcrypt.hashSync(password, saltRounds);
 
         if (role === 'user') {
             newUser = new User({
-                firstName, lastName, email, password,
+                firstName, lastName, email, password: hashed_pw,
                 phone, address, birthDate: new Date(yyyy, mm, dd),
                 role, picture, customerDetails: { assignedTechIds: [] }
             });
@@ -20,7 +25,7 @@ export const register = async (req, res) => {
         if (role === 'technician') {
 
             newUser = new User({
-                firstName, lastName, email, password,
+                firstName, lastName, email, password: hashed_pw,
                 phone, address, birthDate: new Date(yyyy, mm, dd),
                 role, picture, technicianDetails: req.body.technicianDetails,
             });
@@ -50,7 +55,7 @@ export const login = async (req, res) => {
     }
     const user = await User.findOne({ email });
 
-    if (!user || user.password !== password) {
+    if (!user || !bcrypt.compareSync(password, user.password)) {
         return res.status(404).json({ "error": "Incorrect email or password" });
     }
 
