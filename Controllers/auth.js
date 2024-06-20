@@ -1,39 +1,18 @@
 import User from "../models/users.js"
-import { hashSync, compareSync } from 'bcrypt'
+import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import 'dotenv/config'
 import { sendEmail } from "../utils/sendEmail.js"
+import { createUser } from "../utils/createUser.js"
+import { FieldRequiredError } from "../utils/errorsHandler.js"
 
 
 export const register = async (req, res) => {
-  const { firstName, lastName, email, password, phone, address,
-    birthDate, role, picture } = req.body;
-
-  const [mm, dd, yyyy] = birthDate.split('-');
-
-  const saltRounds = 10;
+  const { role } = req.body
 
   try {
-    let newUser;
-
-    // Hash the password
-    const hashed_pw = hashSync(password, saltRounds);
-
-    if (role === 'user') {
-      newUser = new User({
-        firstName, lastName, email, password: hashed_pw,
-        phone, address, birthDate: new Date(yyyy, mm, dd),
-        role, picture, customerDetails: { assignedTechIds: [] }
-      });
-    }
-
-    if (role === 'technician') {
-
-      newUser = new User({
-        firstName, lastName, email, password: hashed_pw,
-        phone, address, birthDate: new Date(yyyy, mm, dd),
-        role, picture, technicianDetails: req.body.technicianDetails,
-      });
+    const newUser = createUser(role, req.body);
+    if (typeof newUser === 'string') {
+      throw new FieldRequiredError(`${newUser} is required`);
     }
 
     // Send confirmation email
@@ -53,24 +32,21 @@ export const register = async (req, res) => {
       return res.status(400).json({ "error": "Phone number already registered" });
     }
 
-    res.status(400).json({ "error": err });
+    res.status(err.statusCode || 400).json({ error: err, message: err.message });
   }
 }
 
 
 export const confirmEmail = async (req, res) => {
   const emailToken = req.headers.token;
-  console.log(emailToken);
   if (!emailToken) {
     res.status(400).json({ "error": "Token is required" });
   }
 
   try {
-    const decoded = jwt.verify(emailToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
-    const user = await User.findById(decoded.userId);
+    const { userId } = jwt.verify(emailToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
+    const user = await User.findByIdAndUpdate(userId, { emailConfirmed: true });
     if (!user) return res.status(400).json({ "error": "Invalid token" });
-    user.emailConfirmed = true;
-    await user.save();
     res.json({ "message": "Email confirmed successfully" });
   } catch (error) {
     res.status(400).json({ error })
@@ -81,9 +57,11 @@ export const confirmEmail = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ "error": "Email and password are required" });
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
   }
+
+  if (!password) return res.status(400).json({ error: "Password is required" });
 
   try {
     const user = await User.findOne({ email });
