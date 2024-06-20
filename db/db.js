@@ -1,18 +1,15 @@
 import mongoose from "mongoose";
-import User from '../models/users.js';
 
 class DB {
     constructor() {
-        this._connect();
-    }
-
-    async _connect() {
-        try {
-            await mongoose.connect('mongodb://127.0.0.1:27017/technicianHUB');
+        const HOST = process.env.DB_HOST;
+        const PORT = process.env.DB_PORT;
+        const DB_NAME = process.env.DB_NAME;
+        mongoose.connect(`mongodb://${HOST}:${PORT}/${DB_NAME}`).then(() => {
             console.log("Database connected");
-        } catch {
+        }).catch(() => {
             console.log("Error connecting to database");
-        }
+        });
     }
 }
 
