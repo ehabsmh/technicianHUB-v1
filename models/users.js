@@ -8,7 +8,7 @@ const technicianDetailsSchema = new Schema({
     bio: { type: String, required: true },
     rate: { type: Number, default: 0 },
     reviewsCount: { type: Number, default: 0 },
-    isAvailable: { type: Boolean },
+    isAvailable: { type: Boolean, default: true },
 }, { _id: false }); // Disable _id for sub-document schema
 
 const userSchema = new Schema({
