@@ -1,13 +1,12 @@
 import 'dotenv/config'
 import express from 'express'
-import DB from './db/db.js'
+import db from './db/db.js'
 import userRouter from './api/v1/views/user.js';
 import authRouter from './api/v1/views/auth.js';
 // import techRouter from './api/v1/views/technician.js';
 
 export const app = express();
 const port = 3000;
-const db = new DB();
 app.use(express.json());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/", userRouter);
