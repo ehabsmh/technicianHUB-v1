@@ -1,10 +1,10 @@
 import express from 'express'
-import User from '../../../models/users.js';
-import { getUser, getUsers } from '../../../Controllers/user.js';
+import { auth, userAuthorizations } from '../../../middlewares/auth.js';
+import { getTechnician, getTechniciansByService } from '../../../Controllers/user.js';
 
 const userRouter = express.Router();
 
-userRouter.get('/users', getUsers);
-userRouter.get('/users/:id', getUser);
+userRouter.get('/users/technicians/', auth, userAuthorizations, getTechniciansByService);
+userRouter.get('/users/technicians/:id', auth, userAuthorizations, getTechnician);
 
 export default userRouter;
