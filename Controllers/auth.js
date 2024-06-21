@@ -5,79 +5,79 @@ import { sendEmail } from "../utils/sendEmail.js"
 import { createUser } from "../utils/createUser.js"
 import { FieldRequiredError } from "../utils/errorsHandler.js"
 
+class AuthController {
+  static async register(req, res) {
+    const { role } = req.body
 
-export const register = async (req, res) => {
-  const { role } = req.body
+    try {
+      const newUser = createUser(role, req.body);
+      if (typeof newUser === 'string') {
+        throw new FieldRequiredError(`${newUser} is required`);
+      }
 
-  try {
-    const newUser = createUser(role, req.body);
-    if (typeof newUser === 'string') {
-      throw new FieldRequiredError(`${newUser} is required`);
+      // Send confirmation email
+      const token = await sendEmail(newUser);
+
+      if (token) await newUser.save();
+      else return res.status(500).json({ "error": "Failed to send confirmation email" });
+
+      res.status(201).json({ "message": "Success, Confirm you email to login.", token });
+
+    } catch (err) {
+      if (err.errmsg?.includes("duplicate key") && err.errmsg.includes("email")) {
+        return res.status(400).json({ "error": "Email already exists" });
+      }
+
+      if (err.errmsg?.includes("duplicate key") && err.errmsg.includes("phone")) {
+        return res.status(400).json({ "error": "Phone number already registered" });
+      }
+
+      res.status(err.statusCode || 400).json({ error: err, message: err.message });
+    }
+  }
+
+  static async confirmEmail(req, res) {
+    const emailToken = req.headers.token;
+    if (!emailToken) {
+      res.status(400).json({ "error": "Token is required" });
     }
 
-    // Send confirmation email
-    const token = await sendEmail(newUser);
+    try {
+      const { userId } = jwt.verify(emailToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
+      const user = await User.findByIdAndUpdate(userId, { emailConfirmed: true });
+      if (!user) return res.status(400).json({ "error": "Invalid token" });
+      res.json({ "message": "Email confirmed successfully" });
+    } catch (error) {
+      res.status(400).json({ error })
+    }
+  }
 
-    if (token) await newUser.save();
-    else return res.status(500).json({ "error": "Failed to send confirmation email" });
+  static async login(req, res) {
+    const { email, password } = req.body;
 
-    res.status(201).json({ "message": "Success, Confirm you email to login.", token });
-
-  } catch (err) {
-    if (err.errmsg?.includes("duplicate key") && err.errmsg.includes("email")) {
-      return res.status(400).json({ "error": "Email already exists" });
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
     }
 
-    if (err.errmsg?.includes("duplicate key") && err.errmsg.includes("phone")) {
-      return res.status(400).json({ "error": "Phone number already registered" });
-    }
+    if (!password) return res.status(400).json({ error: "Password is required" });
 
-    res.status(err.statusCode || 400).json({ error: err, message: err.message });
+    try {
+      const user = await User.findOne({ email });
+
+      if (user && !user.emailConfirmed) {
+        return res.status(401).json({ "error": "Email not confirmed" });
+      }
+
+      if (!user || !compareSync(password, user.password)) {
+        return res.status(401).json({ "error": "Incorrect email or password" });
+      }
+
+      const token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
+      res.json({ "message": "Login successful", token });
+    } catch (err) {
+      res.status(500).json({ "error": 'Server error', err });
+    }
   }
 }
 
-
-export const confirmEmail = async (req, res) => {
-  const emailToken = req.headers.token;
-  if (!emailToken) {
-    res.status(400).json({ "error": "Token is required" });
-  }
-
-  try {
-    const { userId } = jwt.verify(emailToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
-    const user = await User.findByIdAndUpdate(userId, { emailConfirmed: true });
-    if (!user) return res.status(400).json({ "error": "Invalid token" });
-    res.json({ "message": "Email confirmed successfully" });
-  } catch (error) {
-    res.status(400).json({ error })
-  }
-}
-
-
-export const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ error: "Email is required" });
-  }
-
-  if (!password) return res.status(400).json({ error: "Password is required" });
-
-  try {
-    const user = await User.findOne({ email });
-
-    if (user && !user.emailConfirmed) {
-      return res.status(401).json({ "error": "Email not confirmed" });
-    }
-
-    if (!user || !compareSync(password, user.password)) {
-      return res.status(401).json({ "error": "Incorrect email or password" });
-    }
-
-    const token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
-    res.json({ "message": "Login successful", token });
-  } catch (err) {
-    res.status(500).json({ "error": 'Server error', err });
-  }
-
-}
+export default AuthController
