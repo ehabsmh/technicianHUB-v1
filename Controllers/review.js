@@ -1,25 +1,92 @@
 import Review from "../models/reviews.js";
+import { updateTechRate, updateReviewsCount } from "../utils/techRate.js";
+
 class ReviewController {
-    static async createTechnicianReview(req, res) {
-        const technicianId = req.headers.technician_id;
+  static async createTechnicianReview(req, res) {
+    const technicianId = req.headers.technician_id;
 
-        if (!technicianId) return res.status(400).json({ error: "technicianId is required" });
+    if (!technicianId) return res.status(400).json({ error: "technicianId is required" });
 
-        try {
-            const review = new Review({
-                userId: req.user._id,
-                technicianId: technicianId,
-                content: req.body.content,
-                rate: req.body.rate
-            });
+    try {
+      const userId = req.user._id;
+      const alreadyReviewed = await Review.findOne({
+        reviewedBy: userId,
+        reviewedFor: technicianId
+      });
 
-            await review.save();
+      if (alreadyReviewed) {
+        return res.status(400).json({ error: "You have already reviewed this technician" });
+      }
 
-            res.status(201).json({ review });
-        } catch (error) {
-            res.status(400).json({ error });
-        }
+      const review = new Review({
+        reviewedBy: userId,
+        reviewedFor: technicianId,
+        content: req.body.content,
+        rate: req.body.rate
+      });
+
+      await review.save();
+
+      const technicianUpdated = await updateReviewsCount(technicianId, 1);
+
+      if (!technicianUpdated) {
+        return res.status(400).json({ error: "Failed to update technician reviews count" });
+      }
+
+      const result = await updateTechRate(technicianId);
+
+      if (!result) throw new Error('Failed to update technician rate');
+
+      res.status(201).json({ review });
+    } catch (error) {
+      res.status(400).json({ error });
     }
+  }
+
+  static async getTechnicianReviews(req, res) {
+    const reviewedFor = req.params.techId;
+    const techReviews = await Review.find({ reviewedFor }, { "reviewedFor": 0 })
+      .populate('reviewedBy', 'firstName lastName picture');
+
+    if (!techReviews) return res.status(404).json({ reviews: [] });
+    res.json({ reviews: techReviews });
+  }
+
+  static async updateTechnicianReview(req, res) {
+    const reviewId = req.params.reviewId;
+    const review = await Review.findById(reviewId);
+
+    if (!review) return res.status(404).json({ error: "Review not found" });
+
+    if (review.reviewedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: "You are not allowed to update this review" });
+    }
+
+    await Review.updateOne({ _id: reviewId }, req.body);
+
+    res.json({ message: "Review updated successfully" });
+  }
+
+  static async deleteTechnicianReview(req, res) {
+    const reviewId = req.params.reviewId;
+    const review = await Review.findById(reviewId);
+
+    if (!review) return res.status(404).json({ error: "Review not found" });
+
+    if (review.reviewedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: "You are not allowed to delete this review" });
+    }
+
+    const technicianUpdated = await updateReviewsCount(review.reviewedFor, -1);
+
+    if (!technicianUpdated) {
+      return res.status(400).json({ error: "Failed to update technician reviews count" });
+    }
+
+    await Review.deleteOne({ _id: reviewId });
+
+    res.json({ message: "Review deleted successfully" });
+  }
 }
 
 export default ReviewController;
