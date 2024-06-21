@@ -1,10 +1,10 @@
 import express from 'express'
-import { confirmEmail, login, register } from '../../../Controllers/auth.js';
+import AuthController from '../../../Controllers/auth.js';
 
 const authRouter = express.Router();
 
-authRouter.post('/register', register);
-authRouter.get('/emailConfirmation', confirmEmail);
-authRouter.post('/login', login);
+authRouter.post('/register', AuthController.register);
+authRouter.get('/emailConfirmation', AuthController.confirmEmail);
+authRouter.post('/login', AuthController.login);
 
 export default authRouter;
