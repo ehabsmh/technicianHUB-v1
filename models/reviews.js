@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Types } from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
-    userId: {
+    reviewedBy: {
         type: Types.ObjectId,
         required: true,
         ref: 'User',
@@ -14,7 +14,7 @@ const reviewSchema = new mongoose.Schema({
         }
     },
 
-    technicianId: {
+    reviewedFor: {
         type: Types.ObjectId,
         required: true,
         ref: 'User',
@@ -33,7 +33,9 @@ const reviewSchema = new mongoose.Schema({
         required: true,
         min: 1,
         max: 5
-    }
+    },
+}, {
+    timestamps: true
 })
 
 const Review = mongoose.model('Review', reviewSchema);
