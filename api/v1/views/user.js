@@ -1,16 +1,21 @@
 import express from 'express'
-import { auth, userAuthorizations } from '../../../middlewares/auth.js';
-import { getTechnician, getTechniciansByService } from '../../../Controllers/user.js';
+import { userAuthorizations } from '../../../middlewares/auth.js';
 import ReviewController from './../../../Controllers/review.js';
+import UserController from './../../../Controllers/user.js';
 
 const userRouter = express.Router();
 
-// technicians views to the users
-userRouter.get('/technicians/', auth, userAuthorizations, getTechniciansByService);
-userRouter.get('/technicians/:id', auth, userAuthorizations, getTechnician);
+// User view to the technicians
+userRouter.get('/technicians/', userAuthorizations, UserController.getTechniciansByService);
+userRouter.get('/technicians/:techId', userAuthorizations, UserController.getTechnician);
 
-// technicians Reviews views to the users
-userRouter.post('/technicians/reviews', auth, userAuthorizations, ReviewController.createTechnicianReview);
-// userRouter.get('/technicians/:id/reviews', auth, userAuthorizations, getTechnicianReviews);
+// User view to technicians Reviews
+userRouter.post('/createReview', userAuthorizations,
+    ReviewController.createTechnicianReview);
+userRouter.get('/technicians/:techId/reviews', ReviewController.getTechnicianReviews);
+userRouter.put('/technicians/reviews/:reviewId', userAuthorizations,
+    ReviewController.updateTechnicianReview);
+userRouter.delete('/technicians/reviews/:reviewId', userAuthorizations,
+    ReviewController.deleteTechnicianReview);
 
 export default userRouter;
