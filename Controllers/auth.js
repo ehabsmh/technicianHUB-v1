@@ -2,15 +2,15 @@ import User from "../models/users.js"
 import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { sendEmail } from "../utils/sendEmail.js"
-import { createUser } from "../utils/createUser.js"
 import { FieldRequiredError } from "../utils/errorsHandler.js"
+import db from './../db/db.js';
 
 class AuthController {
   static async register(req, res) {
     const { role } = req.body
 
     try {
-      const newUser = createUser(role, req.body);
+      const newUser = db.createUser(role, req.body);
       if (typeof newUser === 'string') {
         throw new FieldRequiredError(`${newUser} is required`);
       }
