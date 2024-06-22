@@ -1,7 +1,7 @@
 import express from 'express'
 import 'dotenv/config'
 import db from './db/db.js'
-import { auth } from './middlewares/auth.js';
+import { auth } from './api/v1/middlewares/auth.js';
 import userRouter from './api/v1/views/user.js';
 import authRouter from './api/v1/views/auth.js';
 import techRouter from './api/v1/views/technician.js';

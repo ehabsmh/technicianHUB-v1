@@ -1,8 +1,8 @@
 import express from 'express'
-import { userAuthorizations } from '../../../middlewares/auth.js';
-import ReviewController from './../../../Controllers/review.js';
-import UserController from './../../../Controllers/user.js';
-import JobRequestController from '../../../Controllers/jobRequest.js';
+import { userAuthorizations } from '../middlewares/auth.js';
+import ReviewController from '../Controllers/review.js';
+import UserController from '../Controllers/user.js';
+import JobRequestController from '../Controllers/jobRequest.js';
 
 const userRouter = express.Router();
 

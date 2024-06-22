@@ -1,9 +1,9 @@
-import User from "../models/users.js"
+import User from "../../../models/users.js"
 import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { sendEmail } from "../utils/sendEmail.js"
-import { FieldRequiredError } from "../utils/errorsHandler.js"
-import db from './../db/db.js';
+import { sendEmail } from "../../../utils/sendEmail.js"
+import { FieldRequiredError } from "../../../utils/errorsHandler.js"
+import db from '../../../db/db.js';
 
 class AuthController {
   static async register(req, res) {

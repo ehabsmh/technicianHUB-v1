@@ -1,5 +1,5 @@
-import db from "../db/db.js";
-import User from "../models/users.js";
+import db from "../../../db/db.js";
+import User from "../../../models/users.js";
 
 class UserController {
   static async getTechnician(req, res) {

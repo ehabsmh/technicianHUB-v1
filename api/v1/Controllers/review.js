@@ -1,6 +1,5 @@
-import db from "../db/db.js";
-import Review from "../models/reviews.js";
-// import { updateTechRate, updateReviewsCount } from "../utils/techRate.js";
+import db from "../../../db/db.js";
+import Review from "../../../models/reviews.js";
 
 class ReviewController {
   static async createTechnicianReview(req, res) {

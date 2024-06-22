@@ -1,4 +1,4 @@
-import JobRequest from "../models/jobRequest.js";
+import JobRequest from "../../../models/jobRequest.js";
 
 class JobRequestController {
   static async createJobRequest(req, res) {

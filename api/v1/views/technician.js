@@ -1,6 +1,6 @@
 import express from 'express'
-import { technicianAuthorizations } from '../../../middlewares/auth.js';
-import JobRequestController from '../../../Controllers/jobRequest.js';
+import { technicianAuthorizations } from '../middlewares/auth.js';
+import JobRequestController from '../Controllers/jobRequest.js';
 
 const techRouter = express.Router();
 
