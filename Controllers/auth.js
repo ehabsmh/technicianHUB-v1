@@ -50,7 +50,7 @@ class AuthController {
         return res.status(400).json({ error: "Email already confirmed" });
       }
 
-      user.updateOne({ emailConfirmed: true });
+      await user.updateOne({ emailConfirmed: true });
 
       if (!user) return res.status(400).json({ error: "Invalid token" });
 
