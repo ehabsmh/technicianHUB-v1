@@ -2,7 +2,7 @@ import mongoose, { Schema, Types } from "mongoose";
 
 const jobRequestSchema = new Schema({
   requestTo: {
-    types: Types.ObjectId(),
+    type: Types.ObjectId,
     ref: 'User',
     required: true,
     validate: {
@@ -14,7 +14,7 @@ const jobRequestSchema = new Schema({
     }
   },
   requestBy: {
-    types: Types.ObjectId(),
+    type: Types.ObjectId,
     ref: 'User',
     required: true,
     validate: {
@@ -26,18 +26,18 @@ const jobRequestSchema = new Schema({
     }
   },
   title: {
-    types: String,
+    type: String,
     required: [true, 'title is required.'],
     min: [8, 'Minimum is 8 characters.'],
     max: [30, 'Title is too long, Maximum of 30 characters.']
   },
   description: {
-    types: String,
+    type: String,
     required: [true, 'description is required.']
   }
 }, {
   timestamps: { createdAt: true, updatedAt: false }
 })
 
-const JobRequest = mongoose.model('JobRequest', jobRequestSchema);
+const JobRequest = mongoose.model('job_request', jobRequestSchema);
 export default JobRequest

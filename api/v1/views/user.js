@@ -2,6 +2,7 @@ import express from 'express'
 import { userAuthorizations } from '../../../middlewares/auth.js';
 import ReviewController from './../../../Controllers/review.js';
 import UserController from './../../../Controllers/user.js';
+import JobRequestController from '../../../Controllers/jobRequest.js';
 
 const userRouter = express.Router();
 
@@ -18,4 +19,6 @@ userRouter.put('/technicians/reviews/:reviewId', userAuthorizations,
 userRouter.delete('/technicians/reviews/:reviewId', userAuthorizations,
     ReviewController.deleteTechnicianReview);
 
+// User view to job requests sent to technicians
+userRouter.post('/jobRequests', userAuthorizations, JobRequestController.createJobRequest);
 export default userRouter;
