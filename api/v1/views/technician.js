@@ -1,10 +1,20 @@
-// import express from 'express'
-// import { getTechnician, getTechniciansByService } from '../../../Controllers/technician.js';
-// import { auth, userAuthorizations } from '../../../middlewares/auth.js';
+import express from 'express'
+import { technicianAuthorizations } from '../../../middlewares/auth.js';
+import JobRequestController from '../../../Controllers/jobRequest.js';
 
-// const techRouter = express.Router();
+const techRouter = express.Router();
 
-// techRouter.get('/technicians/', auth, userAuthorizations, getTechniciansByService);
-// techRouter.get('/technicians/:id', auth, userAuthorizations, getTechnician);
+/* Technician view to the users */
+// Get users job requests.
+techRouter.get('/jobRequests', technicianAuthorizations,
+    JobRequestController.getJobRequests);
 
-// export default techRouter;
+// Get a user job request.
+techRouter.get('/jobRequests/:id', technicianAuthorizations,
+    JobRequestController.getJobRequest);
+
+// Refuse a user job request.
+techRouter.delete('/jobRequests/:id', technicianAuthorizations,
+    JobRequestController.refuseJobRequest);
+
+export default techRouter;
