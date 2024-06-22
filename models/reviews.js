@@ -10,7 +10,8 @@ const reviewSchema = new mongoose.Schema({
             validator: async function (userId) {
                 const user = await mongoose.model('User').findById(userId);
                 return user && user.role === 'user';
-            }
+            },
+            message: props => `${props.value} Is not a valid client ID`
         }
     },
 
@@ -22,7 +23,8 @@ const reviewSchema = new mongoose.Schema({
             validator: async function (technicianId) {
                 const user = await mongoose.model('User').findById(technicianId);
                 return user && user.role === 'technician';
-            }
+            },
+            message: props => `${props.value} Is not a valid technician ID`
         }
     },
 
