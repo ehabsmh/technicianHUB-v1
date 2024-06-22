@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { hashSync } from "bcrypt";
 import User from "../models/users.js";
+import Review from "../models/reviews.js";
 
 class DB {
     constructor() {
@@ -57,6 +58,41 @@ class DB {
         return newUser;
     }
 
+    async calculateTechnicianRate(technicianId) {
+        const pipeline = [
+            { $group: { _id: "$reviewedFor", rate: { $avg: "$rate" } } },
+            { $match: { _id: new mongoose.Types.ObjectId('' + technicianId) } }
+        ];
+
+        const result = await Review.aggregate(pipeline);
+
+        if (result.length === 0) return null;
+
+        return result;
+    }
+
+    async updateTechRate(technicianId) {
+        const techRate = await this.calculateTechnicianRate(technicianId);
+
+        if (!techRate) return false;
+
+        const [{ rate }] = techRate;
+        const technician = await User.findByIdAndUpdate(technicianId, { "technicianDetails.rate": rate });
+
+        if (!technician) return false;
+
+        return true;
+    }
+
+    async updateReviewsCount(technicianId, value) {
+        const technicianUpdated = await User.findByIdAndUpdate(technicianId, {
+            $inc: {
+                "technicianDetails.reviewsCount": value
+            }
+        })
+
+        return technicianUpdated;
+    }
 }
 
 const db = new DB();

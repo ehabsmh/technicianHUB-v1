@@ -1,5 +1,6 @@
+import db from "../db/db.js";
 import Review from "../models/reviews.js";
-import { updateTechRate, updateReviewsCount } from "../utils/techRate.js";
+// import { updateTechRate, updateReviewsCount } from "../utils/techRate.js";
 
 class ReviewController {
   static async createTechnicianReview(req, res) {
@@ -27,13 +28,12 @@ class ReviewController {
 
       await review.save();
 
-      const technicianUpdated = await updateReviewsCount(technicianId, 1);
+      const technicianUpdated = await db.updateReviewsCount(technicianId, 1);
 
       if (!technicianUpdated) {
         return res.status(400).json({ error: "Failed to update technician reviews count" });
       }
-
-      const result = await updateTechRate(technicianId);
+      const result = await db.updateTechRate(technicianId);
 
       if (!result) throw new Error('Failed to update technician rate');
 
@@ -77,7 +77,7 @@ class ReviewController {
       return res.status(403).json({ error: "You are not allowed to delete this review" });
     }
 
-    const technicianUpdated = await updateReviewsCount(review.reviewedFor, -1);
+    const technicianUpdated = await db.updateReviewsCount(review.reviewedFor, -1);
 
     if (!technicianUpdated) {
       return res.status(400).json({ error: "Failed to update technician reviews count" });
