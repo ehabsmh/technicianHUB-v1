@@ -7,7 +7,7 @@ export const createUser = (role, reqBody) => {
 
   const requiredFields = [
     "firstName", "lastName", "email", "password", "phone",
-    "address", "birthDate"
+    "address", "birthDate", "role"
   ];
 
   const emptyField = requiredFields.find(field => !reqBody[field]);
