@@ -1,7 +1,7 @@
 import User from "../../../models/users.js"
 import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { sendEmail } from "../../../utils/sendEmail.js"
+import { sendEmail } from "../../../utils/emailConfirmation.js"
 import { FieldRequiredError } from "../../../utils/errorsHandler.js"
 import db from '../../../db/db.js';
 
