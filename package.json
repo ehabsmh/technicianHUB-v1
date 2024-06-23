@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Technicians HUB is a web platform designed to connect users with skilled technicians effortlessly",
   "type": "module",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon api/index.js"
   },
   "repository": {
     "type": "git",

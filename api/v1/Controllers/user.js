@@ -1,4 +1,3 @@
-import db from "../../../db/db.js";
 import User from "../../../models/users.js";
 
 class UserController {
