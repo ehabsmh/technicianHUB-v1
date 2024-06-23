@@ -1,6 +1,7 @@
 import express from 'express'
 import { technicianAuthorizations } from '../middlewares/auth.js';
 import JobRequestController from '../Controllers/jobRequest.js';
+import JobStateController from '../Controllers/jobState.js';
 
 const techRouter = express.Router();
 
@@ -16,5 +17,13 @@ techRouter.get('/jobRequests/:id', technicianAuthorizations,
 // Refuse a user job request.
 techRouter.delete('/jobRequests/:id', technicianAuthorizations,
     JobRequestController.refuseJobRequest);
+
+// Accept a user job request.
+techRouter.post('/jobState', technicianAuthorizations,
+    JobStateController.acceptJobRequest);
+
+
+techRouter.put('/jobState/:id', technicianAuthorizations,
+    JobStateController.completeJobRequest);
 
 export default techRouter;
