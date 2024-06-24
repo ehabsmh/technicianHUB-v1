@@ -13,12 +13,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendEmail(user) {
+export async function sendEmail(user, content, payload) {
   const fileName = fileURLToPath(import.meta.url);
   const dirName = path.dirname(fileName);
 
   try {
-    const htmlFilePath = path.resolve(dirName, 'sendEmail.html');
+    const htmlFilePath = path.resolve(dirName, content);
     const htmlContent = await fs.promises.readFile(htmlFilePath, 'utf-8');
     await transporter.sendMail({
       from: '"Technician HUB 👷‍♂️" <ehabsmh3@gmail.com>',
@@ -27,7 +27,7 @@ export async function sendEmail(user) {
       html: htmlContent
     });
 
-    return jwt.sign({ userId: user._id, email: user.email },
+    return jwt.sign(payload,
       process.env.JWT_CONFIRM_EMAIL_SECRET,
       { expiresIn: '1d' });
 
