@@ -3,6 +3,7 @@ import { userAuthorizations } from '../middlewares/auth.js';
 import ReviewController from '../Controllers/review.js';
 import UserController from '../Controllers/user.js';
 import JobRequestController from '../Controllers/jobRequest.js';
+import JobStateController from '../Controllers/jobState.js';
 
 const userRouter = express.Router();
 
@@ -33,4 +34,6 @@ userRouter.delete('/technicians/reviews/:reviewId', userAuthorizations,
 // Create a job request
 userRouter.post('/jobRequests', userAuthorizations, JobRequestController.createJobRequest);
 
+// Confirm job completion
+userRouter.get('/confirmJobCompletion/:token', userAuthorizations, JobStateController.completeJobRequest);
 export default userRouter;
