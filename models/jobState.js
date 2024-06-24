@@ -14,6 +14,18 @@ const jobStateSchema = new Schema({
       message: props => `${props.value} Is not a valid technician ID`
     }
   },
+  userId: {
+    type: Types.ObjectId,
+    ref: 'User',
+    required: [true, "User ID is required"],
+    validate: {
+      validator: async function (userId) {
+        const user = await mongoose.model('User').findById(userId);
+        return user && user.role === 'user';
+      },
+      message: props => `${props.value} Is not a valid client ID`
+    }
+  },
   acceptedReq: {
     type: Types.ObjectId,
     ref: 'job_request',
@@ -22,7 +34,7 @@ const jobStateSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'completed']
+    enum: ['pending', 'pending confirmation', 'completed']
   }
 }, { timestamps: true });
 
