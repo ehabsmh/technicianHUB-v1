@@ -34,7 +34,10 @@ const jobStateSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'pending confirmation', 'completed']
+    enum: {
+      values: ['pending', 'pending confirmation', 'completed'],
+      message: '{VALUE} is not supported'
+    }
   }
 }, { timestamps: true });
 
