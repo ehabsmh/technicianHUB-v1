@@ -16,8 +16,7 @@ class AuthController {
       }
 
       // Send confirmation email
-      const payload = { userId: newUser._id };
-      const token = await sendEmail(newUser, 'emailConfirmation.html', payload);
+      const token = await sendEmail(newUser, 'emailConfirmation.html', { user: newUser });
 
       if (token) await newUser.save();
       else return res.status(500).json({ "error": "Failed to send confirmation email" });
@@ -38,22 +37,16 @@ class AuthController {
   }
 
   static async confirmEmail(req, res) {
-    const emailToken = req.headers.confirm_email_token;
-    if (!emailToken) {
-      res.status(400).json({ error: "No header confirm_email_token is found." });
-    }
+    const emailToken = req.query.token;
 
     try {
-      const { userId } = jwt.verify(emailToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
-      const user = await User.findById(userId);
+      const { user } = jwt.verify(emailToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
 
       if (user.emailConfirmed) {
         return res.status(400).json({ error: "Email already confirmed" });
       }
 
-      await user.updateOne({ emailConfirmed: true });
-
-      if (!user) return res.status(400).json({ error: "Invalid token" });
+      await User.findByIdAndUpdate(user._id, { emailConfirmed: true });
 
       res.json({ "message": "Email confirmed successfully" });
     } catch (error) {
