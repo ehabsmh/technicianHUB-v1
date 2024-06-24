@@ -3,7 +3,7 @@ import Review from "../../../models/reviews.js";
 
 class ReviewController {
   static async createTechnicianReview(req, res) {
-    const technicianId = req.headers.technician_id;
+    const technicianId = req.body.technicianId;
 
     if (!technicianId) return res.status(400).json({ error: "technicianId is required" });
 
@@ -59,6 +59,11 @@ class ReviewController {
 
     if (review.reviewedBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({ error: "You are not allowed to update this review" });
+    }
+
+    if (req.body.rate) {
+      const result = await db.updateTechRate(review.reviewedFor);
+      if (!result) throw new Error('Failed to update technician rate');
     }
 
     await Review.updateOne({ _id: reviewId }, req.body);
