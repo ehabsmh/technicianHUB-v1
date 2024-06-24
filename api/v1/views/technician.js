@@ -22,8 +22,9 @@ techRouter.delete('/jobRequests/:id', technicianAuthorizations,
 techRouter.post('/jobState', technicianAuthorizations,
     JobStateController.acceptJobRequest);
 
-
+// Sends email to user to confirm job completion.
 techRouter.put('/jobState/:id', technicianAuthorizations,
-    JobStateController.completeJobRequest);
+    JobStateController.pendingConfirmation);
+
 
 export default techRouter;
