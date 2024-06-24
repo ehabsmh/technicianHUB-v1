@@ -1,7 +1,7 @@
 import User from "../../../models/users.js"
 import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { sendEmail } from "../../../utils/emailConfirmation.js"
+import { sendEmail } from "../../../utils/sendEmail.js"
 import { FieldRequiredError } from "../../../utils/errorsHandler.js"
 import db from '../../../db/db.js';
 
@@ -16,7 +16,8 @@ class AuthController {
       }
 
       // Send confirmation email
-      const token = await sendEmail(newUser);
+      const payload = { userId: newUser._id };
+      const token = await sendEmail(newUser, 'emailConfirmation.html', payload);
 
       if (token) await newUser.save();
       else return res.status(500).json({ "error": "Failed to send confirmation email" });
@@ -37,9 +38,9 @@ class AuthController {
   }
 
   static async confirmEmail(req, res) {
-    const emailToken = req.headers.token;
+    const emailToken = req.headers.confirm_email_token;
     if (!emailToken) {
-      res.status(400).json({ error: "Token is required" });
+      res.status(400).json({ error: "No header confirm_email_token is found." });
     }
 
     try {
