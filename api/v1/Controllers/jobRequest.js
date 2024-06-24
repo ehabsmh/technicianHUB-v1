@@ -82,5 +82,4 @@ class JobRequestController {
 
   }
 }
-
 export default JobRequestController;
