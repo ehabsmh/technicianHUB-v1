@@ -14,4 +14,4 @@ app.use(auth);
 app.use("/api/v1/users/", userRouter);
 app.use("/api/v1/technicians/", techRouter);
 
-export const server = app.listen(port, () => console.log(`Technician HUB listening on port ${port}!`));
+app.listen(port, () => console.log(`Technician HUB listening on port ${port}!`));
