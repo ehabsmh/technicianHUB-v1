@@ -26,7 +26,7 @@ const jobStateSchema = new Schema({
       message: props => `${props.value} Is not a valid client ID`
     }
   },
-  acceptedReq: {
+  requestNo: {
     type: Types.ObjectId,
     ref: 'job_request',
     required: true,
