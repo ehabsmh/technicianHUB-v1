@@ -3,14 +3,7 @@ import JobRequest from "../../../models/jobRequest.js";
 class JobRequestController {
   static async createJobRequest(req, res) {
     const requestBy = req.user._id;
-    const requestTo = req.header('technician_id');
-
-    if (!requestTo) {
-      return res.status(400).json({ error: "No technician_id header found." });
-    }
-
-    const { title, description } = req.body;
-
+    const { title, description, requestTo } = req.body;
 
     try {
       const alreadyRequested = await JobRequest.findOne({ requestBy, requestTo });
