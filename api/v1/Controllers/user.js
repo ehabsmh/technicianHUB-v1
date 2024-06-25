@@ -32,10 +32,13 @@ class UserController {
     }
 
     try {
+      const projection = {
+        password: 0, role: 0,
+      }
       const technicians = await User.find({
-        'technicianDetails.service': service,
+        'technicianDetails.service': service.toLowerCase(),
         'technicianDetails.isAvailable': true
-      });
+      }, projection);
 
       res.json({ technicians });
     } catch (error) {
