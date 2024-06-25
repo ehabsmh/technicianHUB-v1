@@ -2,10 +2,16 @@ import express from 'express'
 import { technicianAuthorizations } from '../middlewares/auth.js';
 import JobRequestController from '../Controllers/jobRequest.js';
 import JobStateController from '../Controllers/jobState.js';
+import TechnicianController from '../Controllers/technician.js';
 
 const techRouter = express.Router();
 
 /* Technician view to the users */
+
+// Update a technician
+techRouter.put('/:id', technicianAuthorizations,
+    TechnicianController.updateTechnician);
+
 // Get users job requests.
 techRouter.get('/jobRequests', technicianAuthorizations,
     JobRequestController.getJobRequests);
