@@ -1,10 +1,8 @@
 import "../styles/landing.css";
-import Navbar from "./../components/Navbar";
 
 export default function Landing() {
   return (
     <>
-      <Navbar />
       <header id="hero" className="relative">
         <div className="layer absolute top-0 left-0 right-0 bottom-0">
           <div className="container mx-auto flex items-center justify-center mt-24">

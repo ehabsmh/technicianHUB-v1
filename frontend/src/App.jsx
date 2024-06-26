@@ -15,13 +15,13 @@ function App() {
 
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={loading ? <Spinner /> : <Landing />} />
         <Route
           path="/login"
           element={
             <>
-              <Navbar />
               <div>login</div>
             </>
           }
@@ -30,11 +30,11 @@ function App() {
           path="/register"
           element={
             <>
-              <Navbar />
               <div>Register</div>
             </>
           }
         />
+        <Route path="*" element=<p>404 not found</p> />
       </Routes>
     </>
   );

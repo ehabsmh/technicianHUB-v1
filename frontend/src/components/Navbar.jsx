@@ -3,6 +3,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "../styles/nav.css";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+
 export default function Navbar() {
   const menuList = useRef(null);
   const menuListToggle = () => menuList.current.classList.toggle("opacity-0");
