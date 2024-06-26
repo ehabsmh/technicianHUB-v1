@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import "../styles/landing.css";
+import "../styles/nav.css";
 import { useRef } from "react";
-
+import { Link } from "react-router-dom";
 export default function Navbar() {
   const menuList = useRef(null);
   const menuListToggle = () => menuList.current.classList.toggle("opacity-0");
@@ -11,9 +11,9 @@ export default function Navbar() {
       <nav className="py-5">
         <div className="container w-11/12  mx-auto flex justify-between items-center nunito-medium text-nav-color relative lg:static">
           <div className="logo w-40 md:w-52">
-            <a href="#">
+            <Link to="/">
               <img src="assets/images/logo2.png" alt="" className="" />
-            </a>
+            </Link>
           </div>
           <div className="menu">
             <FontAwesomeIcon
@@ -22,13 +22,13 @@ export default function Navbar() {
               onClick={menuListToggle}
             />
             <ul
-              className="menu-list opacity-0 lg:opacity-100 lg:p-0 p-4"
+              className="menu-list z-10 opacity-0 lg:opacity-100 lg:p-0 p-4"
               ref={menuList}
             >
               <li className="lg:px-8 lg:py-0 py-2">
-                <a href="#" className="hover:text-sec duration-300">
+                <Link to="/" className="hover:text-sec duration-300">
                   Home
-                </a>
+                </Link>
               </li>
 
               <li className="lg:px-8 lg:py-0 py-2">
@@ -55,14 +55,14 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="lg:px-3 lg:py-0 py-2">
-                <a href="#" className="hover:text-sec duration-300">
+                <Link to="/login" className="hover:text-sec duration-300">
                   Login
-                </a>
+                </Link>
               </li>
               <li className="lg:px-3  lg:py-0 py-2">
-                <a href="#" className="hover:text-sec duration-300">
+                <Link to="/register" className="hover:text-sec duration-300">
                   Register
-                </a>
+                </Link>
               </li>
               <li className="lg:px-3  lg:py-0 py-2">
                 <a href="#" className="hover:text-sec duration-300">

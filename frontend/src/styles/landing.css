@@ -2,11 +2,14 @@ header {
   background-image: url(assets/images/hero-bg-light.webp);
   background-repeat: no-repeat;
   background-size: cover;
+  height: 88vh;
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; */
 }
 
-.menu .menu-list {
-  @apply lg:flex lg:items-center absolute lg:static right-10 bg-slate-200 lg:bg-transparent p-4 lg:h-auto h-96 bottom-0 top-0 left-10 lg:mt-0 mt-20 rounded-lg duration-300
-}
 
 #hero .layer {
   background-color: rgba(255, 255, 255, 0.7);

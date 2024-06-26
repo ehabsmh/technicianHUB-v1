@@ -4,9 +4,9 @@ import Navbar from "./../components/Navbar";
 export default function Landing() {
   return (
     <>
-      <header id="hero" className="h-screen relative">
+      <Navbar />
+      <header id="hero" className="relative">
         <div className="layer absolute top-0 left-0 right-0 bottom-0">
-          <Navbar />
           <div className="container mx-auto flex items-center justify-center mt-24">
             <div className="text-center flex flex-col items-center">
               <h1 className="text-4xl font-bold mb-5 text-heading-color">
