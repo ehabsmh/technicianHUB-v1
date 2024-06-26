@@ -3,6 +3,7 @@ import Landing from "./pages/Landing";
 import Spinner from "./components/Spinner";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Register from "./pages/Register";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,14 +27,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/register"
-          element={
-            <>
-              <div>Register</div>
-            </>
-          }
-        />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element=<p>404 not found</p> />
       </Routes>
     </>

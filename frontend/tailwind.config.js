@@ -13,6 +13,7 @@ export default {
       colors: {
         'sec': "#388da8",
         'heading-color': "#3e5055",
+        'sec-active': "#255d6f"
       },
     },
   },

@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const menuList = useRef(null);
-  const menuListToggle = () => menuList.current.classList.toggle("opacity-0");
+  const menuListToggle = () => {
+    menuList.current.classList.toggle("opacity-0");
+    menuList.current.classList.toggle("-z-10");
+  };
   return (
     <>
       <nav className="py-5">
@@ -23,7 +26,7 @@ export default function Navbar() {
               onClick={menuListToggle}
             />
             <ul
-              className="menu-list z-10 opacity-0 lg:opacity-100 lg:p-0 p-4"
+              className="menu-list -z-10 opacity-0 lg:opacity-100 lg:p-0 p-4"
               ref={menuList}
             >
               <li className="lg:px-8 lg:py-0 py-2">

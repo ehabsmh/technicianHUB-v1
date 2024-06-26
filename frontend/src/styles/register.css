@@ -1,0 +1,21 @@
+.technician-details::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    height: 1px;
+    background-color: rgb(199, 199, 199);
+    width: 100%;
+}
+
+.register-buttons {
+    @apply text-white rounded-lg w-1/2 py-3 cursor-pointer duration-200
+}
+
+.register-inputs {
+    @apply bg-gray-200 rounded-lg mb-3 p-2 w-full focus-visible:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-200
+}
+
+
+button.active {
+    @apply bg-sec-active
+}
