@@ -1,0 +1,9 @@
+header {
+    background-image: url(assets/images/hero-bg-light.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#hero .layer {
+    background-color: rgba(255, 255, 255, 0.7);
+}
