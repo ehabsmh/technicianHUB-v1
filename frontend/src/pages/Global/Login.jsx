@@ -89,7 +89,7 @@ export default function Login() {
                         type="submit"
                         className="bg-black register-buttons w-full mt-5"
                       >
-                        Create an account
+                        Login
                       </button>
                     )}
                   </form>
