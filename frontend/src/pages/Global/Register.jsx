@@ -7,18 +7,29 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../components/Spinner";
+import Joi from "joi";
 
 export default function Register() {
   const [userRole, setUserRole] = useState("user");
   const [registrationError, setRegistrationError] = useState("");
   const [confirmEmailMsg, setConfirmEmailMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const [newUser] = useState({});
+  const [newUser, setNewUser] = useState({});
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [pwError, setPwError] = useState("");
   const client = useRef(null);
   const technician = useRef(null);
 
   const createUser = (e) => {
-    newUser[e.target.name] = e.target.value;
+    if (!e.target.name) return;
+    if (e.target.name.includes("technicianDetails")) {
+      const [, field] = e.target.name.split(".");
+      newUser.technicianDetails[field] = e.target.value;
+    } else {
+      newUser[e.target.name] = e.target.value;
+    }
     newUser.role = userRole;
   };
 
@@ -27,19 +38,73 @@ export default function Register() {
     setLoading(true);
 
     try {
+      if (!formValidation()) {
+        setLoading(false);
+        return;
+      }
+
       const { data } = await axios.post(
         "http://localhost:3000/api/v1/auth/register",
         newUser
       );
+
       setRegistrationError("");
       setLoading(false);
       setConfirmEmailMsg(data.message);
+      localStorage.setItem("confirmEmailToken", data.token);
     } catch (error) {
       if (error?.response.data) {
         setRegistrationError(error.response.data.error);
       }
       setLoading(false);
     }
+  };
+
+  const formValidation = () => {
+    const firstNameSchema = Joi.object({
+      firstName: Joi.string().min(3).max(15).required(),
+    }).extract("firstName");
+    const lastNameSchema = Joi.object({
+      lastName: Joi.string().min(3).max(15).required(),
+    }).extract("lastName");
+
+    const emailSchema = Joi.object({
+      email: Joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+        .required(),
+    }).extract("email");
+
+    const pwSchema = Joi.object({
+      password: Joi.string()
+        .pattern(new RegExp("[A-Za-z]{1}\\d{6,}"))
+        .message(
+          "Password must contain only 1 character and at least 6 numbers"
+        ),
+    }).extract("password");
+
+    if (firstNameSchema.validate(newUser.firstName).error) {
+      setFirstNameError(
+        firstNameSchema.validate(newUser.firstName).error.message
+      );
+      return false;
+    } else setFirstNameError("");
+
+    if (lastNameSchema.validate(newUser.lastName).error) {
+      setLastNameError(lastNameSchema.validate(newUser.lastName).error.message);
+      return false;
+    } else setLastNameError("");
+
+    if (emailSchema.validate(newUser.email).error) {
+      setEmailError(emailSchema.validate(newUser.email).error.message);
+      return false;
+    } else setEmailError("");
+
+    if (pwSchema.validate(newUser.password).error) {
+      setPwError(pwSchema.validate(newUser.password).error.message);
+      return false;
+    } else setPwError("");
+
+    return true;
   };
 
   return (
@@ -85,8 +150,12 @@ export default function Register() {
                     ref={client}
                     onClick={() => {
                       setUserRole("user");
+                      newUser.role = "user";
                       client.current.classList.add("active");
                       technician.current.classList.remove("active");
+                      if (newUser.technicianDetails) {
+                        delete newUser.technicianDetails;
+                      }
                     }}
                     className="active bg-sec hover:bg-sec-active active:bg-sec-active register-buttons"
                   >
@@ -97,8 +166,13 @@ export default function Register() {
                     ref={technician}
                     onClick={() => {
                       setUserRole("technician");
+                      newUser.role = "technician";
                       client.current.classList.remove("active");
                       technician.current.classList.add("active");
+                      setNewUser({
+                        ...newUser,
+                        technicianDetails: { service: "plumber" },
+                      });
                     }}
                     className="bg-sec hover:bg-sec-active active:bg-sec-active register-buttons"
                   >
@@ -112,32 +186,74 @@ export default function Register() {
                     onSubmit={userRegistration}
                     onChange={createUser}
                   >
+                    {firstNameError ? (
+                      <h4 className="text-red-500 nunito-medium">
+                        {firstNameError}
+                      </h4>
+                    ) : (
+                      ""
+                    )}
                     <input
                       type="text"
                       required
                       placeholder="First Name"
-                      className="register-inputs"
+                      className={
+                        firstNameError
+                          ? "register-inputs border border-red-500"
+                          : "register-inputs"
+                      }
                       name="firstName"
                     />
+                    {lastNameError ? (
+                      <h4 className="text-red-500 nunito-medium">
+                        {lastNameError}
+                      </h4>
+                    ) : (
+                      ""
+                    )}
                     <input
                       type="text"
                       required
                       placeholder="Last Name"
-                      className="register-inputs"
+                      className={
+                        lastNameError
+                          ? "register-inputs border border-red-500"
+                          : "register-inputs"
+                      }
                       name="lastName"
                     />
+                    {emailError ? (
+                      <h4 className="text-red-500 nunito-medium">
+                        {emailError}
+                      </h4>
+                    ) : (
+                      ""
+                    )}
                     <input
                       type="email"
                       required
                       placeholder="Email"
-                      className="register-inputs"
+                      className={
+                        emailError
+                          ? "register-inputs border border-red-500"
+                          : "register-inputs"
+                      }
                       name="email"
                     />
+                    {pwError ? (
+                      <h4 className="text-red-500 nunito-medium">{pwError}</h4>
+                    ) : (
+                      ""
+                    )}
                     <input
                       type="password"
                       required
                       placeholder="Password"
-                      className="register-inputs"
+                      className={
+                        pwError
+                          ? "register-inputs border border-red-500"
+                          : "register-inputs"
+                      }
                       name="password"
                     />
                     <input
@@ -169,11 +285,7 @@ export default function Register() {
                       className="register-inputs"
                       name="picture"
                     />
-                    {userRole === "technician" ? (
-                      <TechRegisterInputs createUser={createUser} />
-                    ) : (
-                      ""
-                    )}
+                    {userRole === "technician" ? <TechRegisterInputs /> : null}
                     <input type="checkbox" required />
                     <label htmlFor="terms" className="nunito-medium ml-2">
                       I agree to the terms and conditions
