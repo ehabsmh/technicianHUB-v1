@@ -64,7 +64,13 @@ class AuthController {
     if (!password) return res.status(400).json({ error: "Password is required" });
 
     try {
-      const user = await User.findOne({ email });
+      const projection = {
+        emailConfirmed: 0,
+        createdAt: 0,
+        __v: 0,
+        password: 0,
+      }
+      const user = await User.findOne({ email }, projection);
 
       if (user && !user.emailConfirmed) {
         return res.status(401).json({ "error": "Email not confirmed" });
