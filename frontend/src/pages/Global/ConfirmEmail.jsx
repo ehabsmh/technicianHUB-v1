@@ -25,6 +25,7 @@ export default function ConfirmEmail() {
       setTimeout(() => {
         navigate("/login");
       }, 1500);
+      localStorage.removeItem("confirmEmailToken");
     })();
   }, []);
   return (
