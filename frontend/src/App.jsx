@@ -3,7 +3,7 @@ import Landing from "./pages/Landing";
 import Spinner from "./components/Spinner";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Register from "./pages/Register";
+import Register from "./pages/Global/Register";
 
 function App() {
   const [loading, setLoading] = useState(true);

@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";
-import "../styles/register.css";
-import TechRegisterInputs from "../components/Technicians/TechRegisterInputs";
+import "../../styles/register.css";
+import TechRegisterInputs from "../../components/Technicians/TechRegisterInputs";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [userRole, setUserRole] = useState("client");
@@ -13,14 +14,14 @@ export default function Register() {
   return (
     <>
       <section id="register" className="bg-gray-100">
-        <div className="container w-4/5 mx-auto p-4">
-          <div className="grid grid-cols-2">
-            <div className="features w-4/5">
+        <div className="container w-11/12 md:w-4/5 mx-auto p-4">
+          <div className="block md:grid md:grid-cols-2">
+            <div className="hidden md:block features w-4/5">
               <h2 className="feature-title text-2xl nunito-bold">
                 Hire your technician
               </h2>
-              <div className="card ">
-                <p className="">
+              <div className="card">
+                <p>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                   Illum expedita voluptates adipisci odio voluptatem obcaecati
                   dignissimos omnis eius natus animi?
@@ -28,10 +29,10 @@ export default function Register() {
               </div>
             </div>
             <div className="create-account rounded-lg bg-white py-10">
-              <h2 className="feature-title text-4xl nunito-bold mb-10 text-center">
+              <h2 className="feature-title text-xl md:text-2xl lg:text-4xl nunito-bold mb-10 text-center">
                 Create an account
               </h2>
-              <div className="acc-form flex flex-col w-1/2 mx-auto">
+              <div className="acc-form flex flex-col w-3/4 md:w-2/3 lg:w-1/2 mx-auto">
                 <div className="flex justify-center mb-5 gap-3">
                   <button
                     id="client"
@@ -120,15 +121,23 @@ export default function Register() {
                     />
                     {userRole === "technician" ? <TechRegisterInputs /> : ""}
                     <input type="checkbox" required />
-                    <label htmlFor="terms" className="nunito-medium" /> I agree
-                    to the terms and conditions
+                    <label htmlFor="terms" className="nunito-medium ml-2">
+                      {" "}
+                      I agree to the terms and conditions
+                    </label>
                     <button
                       type="submit"
-                      className="bg-black register-buttons w-full"
+                      className="bg-black register-buttons w-full mt-5"
                     >
                       Create an account
                     </button>
                   </form>
+                  <h5 className="mt-5">
+                    Already have account?{" "}
+                    <Link to={"/login"} className="text-sec nunito-bold">
+                      Login
+                    </Link>
+                  </h5>
                 </div>
               </div>
             </div>
