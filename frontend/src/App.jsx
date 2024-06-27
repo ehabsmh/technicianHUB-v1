@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Global/Register";
 import ConfirmEmail from "./pages/Global/ConfirmEmail";
+import Login from "./pages/Global/Login";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -28,14 +29,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route
-              path="/login"
-              element={
-                <>
-                  <div>login</div>
-                </>
-              }
-            />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element=<p>404 not found</p> />
             <Route path="/confirm-email" element={<ConfirmEmail />} />
