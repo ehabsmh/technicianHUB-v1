@@ -30,7 +30,7 @@ class DB {
             return emptyField;
         }
         const saltRounds = 10;
-        const [mm, dd, yyyy] = birthDate.split('-');
+        const [yyyy, mm, dd] = birthDate.split('-');
 
         // Hash the password
         const hashed_pw = hashSync(password, saltRounds);

@@ -16,20 +16,43 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={loading ? <Spinner /> : <Landing />} />
-        <Route
-          path="/login"
-          element={
-            <>
-              <div>login</div>
-            </>
-          }
+      {loading ? (
+        <Spinner
+          spinnerColor="#123abc"
+          spinnerSize="80"
+          spinnerClassName="page-spinner"
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="*" element=<p>404 not found</p> />
-      </Routes>
+      ) : (
+        <>
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                loading ? (
+                  <Spinner
+                    spinnerColor="#123abc"
+                    spinnerSize="80px"
+                    spinnerClassName="page-spinner"
+                  />
+                ) : (
+                  <Landing />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <>
+                  <div>login</div>
+                </>
+              }
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element=<p>404 not found</p> />
+          </Routes>
+        </>
+      )}
     </>
   );
 }

@@ -5,9 +5,10 @@ import { auth } from './v1/middlewares/auth.js';
 import userRouter from './v1/views/user.js';
 import authRouter from './v1/views/auth.js';
 import techRouter from './v1/views/technician.js';
-
+import cors from 'cors'
 export const app = express();
 const port = 3000;
+app.use(cors())
 app.use(express.json());
 app.use("/api/v1/auth/", authRouter);
 app.use(auth);

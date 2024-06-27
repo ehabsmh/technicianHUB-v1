@@ -5,11 +5,42 @@ import "../../styles/register.css";
 import TechRegisterInputs from "../../components/Technicians/TechRegisterInputs";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Spinner from "../../components/Spinner";
 
 export default function Register() {
-  const [userRole, setUserRole] = useState("client");
+  const [userRole, setUserRole] = useState("user");
+  const [registrationError, setRegistrationError] = useState("");
+  const [confirmEmailMsg, setConfirmEmailMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [newUser] = useState({});
   const client = useRef(null);
   const technician = useRef(null);
+
+  const createUser = (e) => {
+    newUser[e.target.name] = e.target.value;
+    newUser.role = userRole;
+  };
+
+  const userRegistration = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/api/v1/auth/register",
+        newUser
+      );
+      setRegistrationError("");
+      setLoading(false);
+      setConfirmEmailMsg(data.message);
+    } catch (error) {
+      if (error?.response.data) {
+        setRegistrationError(error.response.data.error);
+      }
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -32,13 +63,28 @@ export default function Register() {
               <h2 className="feature-title text-xl md:text-2xl lg:text-4xl nunito-bold mb-10 text-center">
                 Create an account
               </h2>
+              {registrationError ? (
+                <h3
+                  id="errorMessage"
+                  className="text-red-600 text-md nunito-bold text-center mb-7"
+                >
+                  {registrationError}
+                </h3>
+              ) : (
+                <h3
+                  id="confirmEmailMsg"
+                  className="text-green-600 text-md nunito-bold text-center mb-7"
+                >
+                  {confirmEmailMsg}
+                </h3>
+              )}
               <div className="acc-form flex flex-col w-3/4 md:w-2/3 lg:w-1/2 mx-auto">
                 <div className="flex justify-center mb-5 gap-3">
                   <button
                     id="client"
                     ref={client}
                     onClick={() => {
-                      setUserRole("client");
+                      setUserRole("user");
                       client.current.classList.add("active");
                       technician.current.classList.remove("active");
                     }}
@@ -61,7 +107,11 @@ export default function Register() {
                   </button>
                 </div>
                 <div>
-                  <form action="">
+                  <form
+                    action=""
+                    onSubmit={userRegistration}
+                    onChange={createUser}
+                  >
                     <input
                       type="text"
                       required
@@ -119,18 +169,34 @@ export default function Register() {
                       className="register-inputs"
                       name="picture"
                     />
-                    {userRole === "technician" ? <TechRegisterInputs /> : ""}
+                    {userRole === "technician" ? (
+                      <TechRegisterInputs createUser={createUser} />
+                    ) : (
+                      ""
+                    )}
                     <input type="checkbox" required />
                     <label htmlFor="terms" className="nunito-medium ml-2">
-                      {" "}
                       I agree to the terms and conditions
                     </label>
-                    <button
-                      type="submit"
-                      className="bg-black register-buttons w-full mt-5"
-                    >
-                      Create an account
-                    </button>
+                    {loading ? (
+                      <button
+                        type="submit"
+                        className="bg-black register-buttons w-full mt-5"
+                      >
+                        <Spinner
+                          spinnerColor="#388da8"
+                          spinnerSize="20px"
+                          spinnerClassName="register-spinner"
+                        />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="bg-black register-buttons w-full mt-5"
+                      >
+                        Create an account
+                      </button>
+                    )}
                   </form>
                   <h5 className="mt-5">
                     Already have account?{" "}

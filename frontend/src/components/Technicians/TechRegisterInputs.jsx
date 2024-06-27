@@ -1,14 +1,18 @@
-export default function TechRegisterInputs() {
+export default function TechRegisterInputs(props) {
+  // eslint-disable-next-line react/prop-types
+  const { createUser } = props;
+
   return (
     <>
       <div className="technician-details duration-300 relative">
         <h4 className="mb-4 mt-5 nunito-medium text-xl">Technician Details</h4>
         <label htmlFor="services">Services</label>
         <select
-          name="services"
-          id="services"
+          name="service"
+          id="service"
           required
           className="register-inputs"
+          onChange={createUser}
         >
           <option value="plumber">Plumber</option>
           <option value="air conditions technician">
@@ -22,6 +26,7 @@ export default function TechRegisterInputs() {
           placeholder="salary"
           className="register-inputs"
           name="salary"
+          onChange={createUser}
         />
         <textarea
           type="number"
@@ -29,7 +34,8 @@ export default function TechRegisterInputs() {
           minLength={20}
           placeholder="Bio"
           className="register-inputs"
-          name="salary"
+          name="bio"
+          onChange={createUser}
         />
       </div>
     </>

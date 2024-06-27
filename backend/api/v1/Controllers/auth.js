@@ -15,11 +15,11 @@ class AuthController {
         throw new FieldRequiredError(`${newUser} is required`);
       }
 
+      await newUser.save();
+
       // Send confirmation email
       const token = await sendEmail(newUser, 'emailConfirmation.html', { user: newUser });
 
-      if (token) await newUser.save();
-      else return res.status(500).json({ "error": "Failed to send confirmation email" });
 
       res.status(201).json({ "message": "Success, Confirm you email to login.", token });
 
