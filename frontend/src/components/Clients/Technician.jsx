@@ -1,20 +1,21 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Technician(props) {
   const { technician } = props;
+  const { service } = useParams();
   return (
     <>
-      <div className="technician relative">
+      <div className="technician relative px-3">
         <div className="rate-container">
           <h4 className="technician-rate text-white">
-            {technician.technicianDetails.rate}
+            {technician.technicianDetails.rate}/5
           </h4>
         </div>
-        <Link>
+        <Link to={`/technicians/${service}/${technician._id}`}>
           <img
             src="../assets/images/default.jpg"
-            alt="xxxx"
+            alt=""
             className="rounded-xl technician-picture"
           />
         </Link>

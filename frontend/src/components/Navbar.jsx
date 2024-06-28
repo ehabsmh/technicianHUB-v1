@@ -46,7 +46,7 @@ export default function Navbar(props) {
                   {user?.role === "user" && (
                     <li className="lg:px-8 lg:py-0 py-2">
                       <Link
-                        to="/technicians"
+                        to="/technicians/plumber"
                         onClick={menuListToggle}
                         href="#"
                         className="hover:text-sec duration-300"

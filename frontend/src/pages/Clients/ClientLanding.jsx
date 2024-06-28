@@ -14,7 +14,7 @@ export default function ClientLanding() {
               <p className=" text-lg mb-10 text-heading-color">
                 Start hire a technician.
               </p>
-              <Link to="/technicians">
+              <Link to="/technicians/plumber">
                 <button className="bg-sec rounded-3xl px-10 py-3 text-white hover:bg-cyan-700 duration-300 mb-5">
                   Get Started
                 </button>

@@ -1,15 +1,24 @@
 .technician .rate-container {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    background: #000;
-    color: white;
-    border-radius: 50%;
-    font-size: 14px;
-    background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background: #000;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+  color: #ffffff;
+}
+
+.filter-icon:hover+.filter {
+  left: 0;
 }

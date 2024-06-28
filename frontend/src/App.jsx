@@ -10,6 +10,7 @@ import ConfirmEmail from "./pages/Global/ConfirmEmail";
 import Login from "./pages/Global/Login";
 import { jwtDecode } from "jwt-decode";
 import Technicians from "./pages/Clients/Technicians";
+import Technician from "./pages/Clients/Technician";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -109,7 +110,7 @@ function App() {
             /> */}
 
             <Route
-              path="/technicians/"
+              path="/technicians/:service"
               element={
                 <ProtectedRoutes>
                   <ClientRoute>
@@ -117,18 +118,17 @@ function App() {
                   </ClientRoute>
                 </ProtectedRoutes>
               }
-            >
-              <Route
-                path="/technicians/:service"
-                element={
-                  <ProtectedRoutes>
-                    <ClientRoute>
-                      <Technicians />
-                    </ClientRoute>
-                  </ProtectedRoutes>
-                }
-              />
-            </Route>
+            />
+            <Route
+              path="/technicians/:service/:id"
+              element={
+                <ProtectedRoutes>
+                  <ClientRoute>
+                    <Technician />
+                  </ClientRoute>
+                </ProtectedRoutes>
+              }
+            />
 
             <Route
               path="/login"
