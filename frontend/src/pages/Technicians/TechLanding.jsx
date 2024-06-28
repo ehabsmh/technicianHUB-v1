@@ -1,6 +1,6 @@
 import "../../styles/landing.css";
 
-export default function Landing() {
+export default function TechLanding() {
   return (
     <>
       <header id="hero" className="relative">
@@ -11,13 +11,13 @@ export default function Landing() {
                 Welcome to <span className="text-sec">Technicians HUB</span>
               </h1>
               <p className=" text-lg mb-10 text-heading-color">
-                Start hire a technician.
+                Check your job requests and manage your profile.
               </p>
               <button className="bg-sec rounded-3xl px-10 py-3 text-white hover:bg-cyan-700 duration-300 mb-5">
                 Get Started
               </button>
               <img
-                src="assets/images/get_started.png"
+                src="../assets/images/get_started.png"
                 alt="get started"
                 className="w-56 lg:w-auto text-center ml-10"
               />
