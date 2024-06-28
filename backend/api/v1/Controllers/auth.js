@@ -70,12 +70,12 @@ class AuthController {
       }
       const user = await User.findOne({ email }, projection);
 
-      if (user && !user.emailConfirmed) {
-        return res.status(401).json({ "error": "Email not confirmed" });
-      }
-
       if (!user || !compareSync(password, user.password)) {
         return res.status(401).json({ "error": "Incorrect email or password" });
+      }
+
+      if (user && !user.emailConfirmed) {
+        return res.status(401).json({ "error": "Confirm your email" });
       }
 
       delete user.emailConfirmed;
