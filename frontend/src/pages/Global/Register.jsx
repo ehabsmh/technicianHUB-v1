@@ -112,11 +112,11 @@ export default function Register() {
       <section id="register" className="bg-gray-100">
         <div className="container w-11/12 md:w-4/5 mx-auto p-4">
           <div className="block md:grid md:grid-cols-2">
-            <div className="hidden md:block features w-4/5">
-              <h2 className="feature-title text-2xl nunito-bold">
-                Hire your technician
-              </h2>
+            <div className="hidden md:flex justify-center items-center features w-4/5">
               <div className="card">
+                <h2 className="feature-title text-2xl nunito-bold">
+                  Hire your technician
+                </h2>
                 <p>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                   Illum expedita voluptates adipisci odio voluptatem obcaecati
