@@ -65,10 +65,8 @@ class AuthController {
 
     try {
       const projection = {
-        emailConfirmed: 0,
         createdAt: 0,
         __v: 0,
-        password: 0,
       }
       const user = await User.findOne({ email }, projection);
 
@@ -79,6 +77,9 @@ class AuthController {
       if (!user || !compareSync(password, user.password)) {
         return res.status(401).json({ "error": "Incorrect email or password" });
       }
+
+      delete user.emailConfirmed;
+      delete user.password;
 
       const token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
       res.json({ "message": "Login successful", token });
