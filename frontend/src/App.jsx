@@ -97,7 +97,7 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="/technicians"
               element={
                 <ProtectedRoutes>
@@ -106,7 +106,29 @@ function App() {
                   </ClientRoute>
                 </ProtectedRoutes>
               }
-            />
+            /> */}
+
+            <Route
+              path="/technicians/"
+              element={
+                <ProtectedRoutes>
+                  <ClientRoute>
+                    <Technicians />
+                  </ClientRoute>
+                </ProtectedRoutes>
+              }
+            >
+              <Route
+                path="/technicians/:service"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <Technicians />
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              />
+            </Route>
 
             <Route
               path="/login"
