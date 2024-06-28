@@ -1,11 +1,15 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useState } from "react";
 import Spinner from "../../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login(props) {
   const [loading, setLoading] = useState(false);
   const [user] = useState({});
   const [errormsg, setErrormsg] = useState("");
+
+  const navigate = useNavigate();
 
   const collectUserData = (e) => {
     user[e.target.name] = e.target.value;
@@ -21,14 +25,19 @@ export default function Login() {
         "http://localhost:3000/api/v1/auth/login",
         user
       );
+
       setLoading(false);
       setErrormsg("");
       localStorage.setItem("token", data.token);
+      const decodedUser = props.verifyToken();
+      if (decodedUser.role === "user") navigate("/client");
+      if (decodedUser.role === "technician") navigate("/tech");
     } catch (error) {
       if (error.response) {
         setErrormsg(error.response.data.error);
       }
       setLoading(false);
+      console.log(error);
     }
   };
   return (
