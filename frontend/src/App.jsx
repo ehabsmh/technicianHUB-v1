@@ -110,7 +110,7 @@ function App() {
             /> */}
 
             <Route
-              path="/technicians/:service"
+              path="technicians/:service"
               element={
                 <ProtectedRoutes>
                   <ClientRoute>
@@ -119,17 +119,7 @@ function App() {
                 </ProtectedRoutes>
               }
             />
-            <Route
-              path="/technicians/:service/:id"
-              element={
-                <ProtectedRoutes>
-                  <ClientRoute>
-                    <Technician />
-                  </ClientRoute>
-                </ProtectedRoutes>
-              }
-            />
-
+            <Route path="technicians/:service/:id" element={<Technician />} />
             <Route
               path="/login"
               element={<Login verifyToken={verifyToken} />}
