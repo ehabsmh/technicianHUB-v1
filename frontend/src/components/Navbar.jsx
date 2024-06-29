@@ -19,7 +19,7 @@ export default function Navbar(props) {
         <div className="container w-11/12 mx-auto flex justify-between items-center nunito-medium text-nav-color">
           <div className="logo w-40 md:w-52">
             <Link to={user?.role === "technician" ? "/tech" : "/client"}>
-              <img src="../assets/images/logo2.png" alt="" className="" />
+              <img src="/assets/images/logo2.png" alt="" className="" />
             </Link>
           </div>
           <div className="menu">
