@@ -3,6 +3,7 @@ import "../../styles/technician.css";
 import Technician from "../../components/Clients/Technician";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Spinner from "../../components/Spinner";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
@@ -109,11 +110,19 @@ export default function Technicians() {
               </li>
             </ul>
           </div>
-          <div className="technicians grid grid-cols-3 gap-10">
-            {technicians.map((technician, i) => (
-              <Technician key={i} technician={technician} />
-            ))}
-          </div>
+          {!technicians.length ? (
+            <Spinner
+              spinnerColor="#388da8"
+              spinnerSize="30px"
+              spinnerClassName="register-spinner"
+            />
+          ) : (
+            <div className="technicians grid grid-cols-3 gap-10">
+              {technicians.map((technician, i) => (
+                <Technician key={i} technician={technician} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
