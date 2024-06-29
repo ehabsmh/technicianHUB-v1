@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import "../../styles/register.css";
+import TechnicianContext from "../../components/Global/Store";
 
 export default function Technician() {
   const [technician, setTechnician] = useState({});
@@ -27,7 +28,7 @@ export default function Technician() {
   };
   useEffect(() => {
     getTechnician();
-  }, []);
+  }, [technician]);
 
   return (
     <>
@@ -90,9 +91,11 @@ export default function Technician() {
           </nav>
         </div>
       </section>
-      <section>
+      <section className="mt-7">
         <div className="container w-4/5 mx-auto">
-          <Outlet />
+          <TechnicianContext.Provider value={technician}>
+            <Outlet />
+          </TechnicianContext.Provider>
         </div>
       </section>
     </>
