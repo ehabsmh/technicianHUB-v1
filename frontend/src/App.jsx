@@ -11,6 +11,8 @@ import Login from "./pages/Global/Login";
 import { jwtDecode } from "jwt-decode";
 import Technicians from "./pages/Clients/Technicians";
 import Technician from "./pages/Clients/Technician";
+import TechnicianBio from "./pages/Global/TechnicianBio";
+import TechnicianReviews from "./pages/Global/TechnicianReviews";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -134,7 +136,7 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <ClientRoute>
-                      <p>Reviews</p>
+                      <TechnicianReviews user={user} />
                     </ClientRoute>
                   </ProtectedRoutes>
                 }
@@ -144,7 +146,7 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <ClientRoute>
-                      <p>About</p>
+                      <TechnicianBio />
                     </ClientRoute>
                   </ProtectedRoutes>
                 }
