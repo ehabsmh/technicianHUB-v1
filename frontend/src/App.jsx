@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ClientLanding from "./pages/Clients/ClientLanding";
 import TechLanding from "./pages/Technicians/TechLanding";
 import Spinner from "./components/Spinner";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Global/Register";
 import ConfirmEmail from "./pages/Global/ConfirmEmail";
@@ -48,14 +48,14 @@ function App() {
     if (user.role === "user") {
       return props.children;
     }
-    return <p>404 not found</p>;
+    return <Navigate to="/tech" />;
   };
 
   const TechnicianRoute = (props) => {
     if (user.role === "technician") {
       return props.children;
     }
-    return <p>404 not found</p>;
+    return <Navigate to="/client" />;
   };
 
   const logout = () => {
@@ -119,7 +119,47 @@ function App() {
                 </ProtectedRoutes>
               }
             />
-            <Route path="technicians/:service/:id" element={<Technician />} />
+            <Route
+              path="technicians/:service/:id"
+              element={
+                <ProtectedRoutes>
+                  <ClientRoute>
+                    <Technician />
+                  </ClientRoute>
+                </ProtectedRoutes>
+              }
+            >
+              <Route
+                path="reviews"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <p>Reviews</p>
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="about"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <p>About</p>
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="completed-jobs"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <p>Completed Jobs</p>
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              />
+            </Route>
             <Route
               path="/login"
               element={<Login verifyToken={verifyToken} />}
