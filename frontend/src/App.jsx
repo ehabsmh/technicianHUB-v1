@@ -25,7 +25,6 @@ function App() {
 
       const { user } = jwtDecode(userToken);
       setUser(user);
-      console.log(user);
       return user;
     }
   };
@@ -39,7 +38,6 @@ function App() {
 
   const ProtectedRoutes = (props) => {
     if (user) {
-      console.log(user);
       return props.children;
     }
 

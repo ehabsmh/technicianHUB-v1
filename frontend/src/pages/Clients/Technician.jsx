@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Navigate, Outlet, useParams } from "react-router-dom";
 import "../../styles/register.css";
 import TechnicianContext from "../../components/Global/Store";
 
@@ -21,14 +21,17 @@ export default function Technician() {
       const tech = { ...technician, ...technicianDetails };
       delete tech.technicianDetails;
       setTechnician(tech);
-      console.log(tech);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getTechnician();
-  }, [technician]);
+  }, []);
+
+  if (window.location.pathname.split("/").length <= 4) {
+    return <Navigate to={`${window.location.pathname}/about`} />;
+  }
 
   return (
     <>

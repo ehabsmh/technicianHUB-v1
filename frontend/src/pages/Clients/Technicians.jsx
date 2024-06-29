@@ -21,7 +21,6 @@ export default function Technicians() {
         options
       );
       setTechnicians(data.technicians);
-      console.log(data.technicians);
     } catch (error) {
       console.log(error);
     }
