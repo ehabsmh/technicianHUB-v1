@@ -98,17 +98,6 @@ function App() {
               }
             />
 
-            {/* <Route
-              path="/technicians"
-              element={
-                <ProtectedRoutes>
-                  <ClientRoute>
-                    <Technicians />
-                  </ClientRoute>
-                </ProtectedRoutes>
-              }
-            /> */}
-
             <Route
               path="technicians/:service"
               element={
@@ -124,7 +113,7 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <ClientRoute>
-                    <Technician />
+                    <Technician user={user} />
                   </ClientRoute>
                 </ProtectedRoutes>
               }
