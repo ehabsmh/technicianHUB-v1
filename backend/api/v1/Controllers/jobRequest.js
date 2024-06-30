@@ -1,4 +1,5 @@
 import JobRequest from "../../../models/jobRequest.js";
+import User from "../../../models/users.js";
 
 class JobRequestController {
   static async createJobRequest(req, res) {
@@ -15,6 +16,8 @@ class JobRequestController {
         title,
         description
       })
+
+      await User.findByIdAndUpdate(requestBy, { $push: { 'customerDetails.assignedTechIds': requestTo } });
 
       res.status(201).json({ message: "Job request created successfully", jobRequest })
     } catch (error) {
@@ -65,12 +68,13 @@ class JobRequestController {
     const techId = req.user._id;
     const requestId = req.params.id;
 
-    const job = await JobRequest.findOneAndDelete({ _id: requestId, requestTo: techId });
-
+    const job = await JobRequest.findOneAndDelete({ _id: requestId, requestTo: techId }, { new: true });
+    console.log(job);
     if (!job) {
       return res.status(404).json({ error: "Job request not found" });
     }
 
+    await User.findByIdAndUpdate(job.requestBy, { $pull: { 'customerDetails.assignedTechIds': techId } });
     res.status(200).json({ message: "Job request refused successfully" });
 
   }
