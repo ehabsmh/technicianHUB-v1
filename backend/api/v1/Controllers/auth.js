@@ -87,6 +87,17 @@ class AuthController {
       res.status(500).json({ "error": 'Server error', err });
     }
   }
+
+  static async refreshToken(req, res) {
+    const user = req.user;
+    try {
+      const updatedUser = await User.findById(user._id);
+      const newToken = jwt.sign({ user: updatedUser }, process.env.JWT_SECRET_KEY);
+      res.status(201).json({ token: newToken });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 export default AuthController

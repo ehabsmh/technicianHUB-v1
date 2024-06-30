@@ -48,6 +48,7 @@ class UserController {
 
   static async updateUser(req, res) {
     const userId = req.user._id;
+    const { technicianId } = req.body
 
     try {
       const user = await User.findByIdAndUpdate(userId, {
