@@ -1,12 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Navigate, Outlet, useParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import "../../styles/register.css";
 import TechnicianContext from "../../components/Global/Store";
 
 export default function Technician() {
   const [technician, setTechnician] = useState({});
   const { id } = useParams();
+  const location = useLocation();
+  const [active, setActive] = useState(location.pathname);
+
   const getTechnician = async () => {
     const options = {
       headers: { token: localStorage.getItem("token") },
@@ -25,9 +34,14 @@ export default function Technician() {
       console.log(error);
     }
   };
+
+  const linkClick = (link) => {
+    setActive(link);
+  };
   useEffect(() => {
     getTechnician();
-  }, []);
+    linkClick(active);
+  }, [technician]);
 
   if (window.location.pathname.split("/").length <= 4) {
     return <Navigate to={`${window.location.pathname}/about`} />;
@@ -75,17 +89,32 @@ export default function Technician() {
           </div>
           <nav className="mt-16 mb-7 relative before:absolute before:-top-5 before:bg-slate-200 before:h-0.5 before:w-full">
             <ul className="flex w-1/3 justify-between p-5 items-center">
-              <Link to={"about"}>
+              <Link
+                to={"about"}
+                className={`technician_profile-link ${
+                  active.includes("about") ? "bg-slate-200" : ""
+                }`}
+              >
                 <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
                   Bio
                 </li>
               </Link>
-              <Link to={"reviews"}>
+              <Link
+                to={"reviews"}
+                className={`technician_profile-link ${
+                  active.includes("reviews") ? "bg-slate-200" : ""
+                }`}
+              >
                 <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
                   Reviews
                 </li>
               </Link>
-              <Link to={"completed-jobs"}>
+              <Link
+                to={"completed-jobs"}
+                className={`technician_profile-link ${
+                  active.includes("completed-jobs") ? "bg-slate-200" : ""
+                }`}
+              >
                 <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
                   Completed jobs
                 </li>
