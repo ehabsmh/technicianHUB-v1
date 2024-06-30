@@ -14,6 +14,9 @@ userRouter.get('/technicians/', userAuthorizations, UserController.getTechnician
 // Get technician by id
 userRouter.get('/technicians/:techId', userAuthorizations, UserController.getTechnician);
 
+// Update user
+userRouter.put('/updateUser', userAuthorizations, UserController.updateUser);
+
 /* User view to technicians Reviews */
 // Create a user review for a technician
 userRouter.post('/createReview', userAuthorizations,

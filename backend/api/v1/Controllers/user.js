@@ -45,6 +45,21 @@ class UserController {
       res.status(401).json({ "error": error });
     }
   }
+
+  static async updateUser(req, res) {
+    const userId = req.user._id;
+
+    try {
+      const user = await User.findByIdAndUpdate(userId, {
+        ...req.body, 'customerDetails.assignedTechIds': technicianId
+      }, { new: true });
+
+      res.json({ message: "User updated successfully", user });
+
+    } catch (error) {
+      res.status(400).json({ "error": error });
+    }
+  }
 }
 
 export default UserController;
