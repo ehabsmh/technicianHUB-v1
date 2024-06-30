@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -9,12 +10,16 @@ import {
 } from "react-router-dom";
 import "../../styles/register.css";
 import TechnicianContext from "../../components/Global/Store";
+import HireTechnician from "../../components/Clients/HireTechnician";
 
-export default function Technician() {
+export default function Technician(props) {
   const [technician, setTechnician] = useState({});
   const { id } = useParams();
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
+  const [hire, setHire] = useState(false);
+  const [hired, setHired] = useState(false);
+  const { user } = props;
 
   const getTechnician = async () => {
     const options = {
@@ -38,9 +43,22 @@ export default function Technician() {
   const linkClick = (link) => {
     setActive(link);
   };
+
+  const handleHire = () => {
+    setHire(true);
+  };
+
+  const checkHiredTechs = () => {
+    const hiredTechnicians = user.customerDetails.assignedTechIds;
+    if (hiredTechnicians.includes(technician._id)) {
+      setHired(true);
+    }
+  };
+
   useEffect(() => {
     getTechnician();
     linkClick(active);
+    checkHiredTechs();
   }, [technician]);
 
   if (window.location.pathname.split("/").length <= 4) {
@@ -48,11 +66,12 @@ export default function Technician() {
   }
 
   return (
-    <>
+    <TechnicianContext.Provider value={technician}>
       <section className="bg-slate-100">
-        <div className="container w-4/5 mx-auto mt-10 bg-white border-b-2">
+        <div className="container w-4/5 mx-auto mt-10 bg-white border-b-2 relative">
+          {hire && <HireTechnician setHire={setHire} setHired={setHired} />}
           <div className="flex items-center space-x-4 p-3">
-            <div className="tech-photo ">
+            <div className="tech-photo">
               <img
                 src={"/assets/images/default.jpg"}
                 alt={`${technician.firstName} ${technician.lastName} photo`}
@@ -80,9 +99,19 @@ export default function Technician() {
             </div>
           </div>
           <div className="contacts mt-7 p-3">
-            <Link className="py-3 px-5 mr-11 bg-sec text-center register-buttons text-white hover:bg-sec-active">
-              <button className="w-32 ">Hire</button>
-            </Link>
+            {hired ? (
+              <button className="w-36 py-3 px-5 mr-11 bg-sec text-center register-buttons text-white hover:bg-sec-active">
+                Already hired
+              </button>
+            ) : (
+              <button
+                className="w-36 py-3 px-5 mr-11 bg-sec text-center register-buttons text-white hover:bg-sec-active"
+                onClick={handleHire}
+              >
+                Hire
+              </button>
+            )}
+
             <Link className="py-3 px-5 mr-11 register-buttons bg-sec text-center hover:bg-sec-active">
               <button className="w-32">Send message</button>
             </Link>
@@ -125,11 +154,9 @@ export default function Technician() {
       </section>
       <section className="mt-7">
         <div className="container w-4/5 mx-auto">
-          <TechnicianContext.Provider value={technician}>
-            <Outlet />
-          </TechnicianContext.Provider>
+          <Outlet />
         </div>
       </section>
-    </>
+    </TechnicianContext.Provider>
   );
 }
