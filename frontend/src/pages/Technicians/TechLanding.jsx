@@ -17,7 +17,7 @@ export default function TechLanding() {
                 Get Started
               </button>
               <img
-                src="../assets/images/get_started.png"
+                src="/assets/images/get_started.png"
                 alt="get started"
                 className="w-56 lg:w-auto text-center ml-10"
               />
