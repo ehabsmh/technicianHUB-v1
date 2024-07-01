@@ -17,7 +17,7 @@ export default function HireTechnician(props) {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "http://localhost:3000/api/v1/users/jobRequests",
         jobRequest,
         { headers: { token: localStorage.getItem("token") } }
