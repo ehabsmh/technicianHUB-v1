@@ -14,52 +14,50 @@ import HireTechnician from "../../components/Clients/HireTechnician";
 
 export default function Technician(props) {
   const [technician, setTechnician] = useState({});
-  const { id } = useParams();
-  const location = useLocation();
-  const [active, setActive] = useState(location.pathname);
   const [hire, setHire] = useState(false);
   const [hired, setHired] = useState(false);
-  const { user } = props;
-
-  const getTechnician = async () => {
-    const options = {
-      headers: { token: localStorage.getItem("token") },
-    };
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3000/api/v1/users/technicians/${id}`,
-        options
-      );
-      const { technician } = data;
-      const { technicianDetails } = technician;
-      const tech = { ...technician, ...technicianDetails };
-      delete tech.technicianDetails;
-      setTechnician(tech);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const linkClick = (link) => {
-    setActive(link);
-  };
+  const { id } = useParams();
+  const location = useLocation();
+  const active = location.pathname;
+  const { user, verifyToken } = props;
 
   const handleHire = () => {
     setHire(true);
   };
 
-  const checkHiredTechs = () => {
-    const hiredTechnicians = user.customerDetails.assignedTechIds;
-    if (hiredTechnicians.includes(technician._id)) {
-      setHired(true);
-    }
-  };
+  useEffect(() => {
+    console.log("HELLO!");
+    const getTechnician = async () => {
+      const options = {
+        headers: { token: localStorage.getItem("token") },
+      };
+      try {
+        const { data } = await axios.get(
+          `http://localhost:3000/api/v1/users/technicians/${id}`,
+          options
+        );
+        const { technician } = data;
+        const { technicianDetails } = technician;
+        const tech = { ...technician, ...technicianDetails };
+        delete tech.technicianDetails;
+        setTechnician(tech);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getTechnician();
+  }, [id]);
 
   useEffect(() => {
-    getTechnician();
-    linkClick(active);
+    const checkHiredTechs = () => {
+      const { assignedTechIds } = user.customerDetails;
+      if (assignedTechIds.includes(technician._id)) {
+        setHired(true);
+      }
+    };
+
     checkHiredTechs();
-  }, [technician, hired]);
+  });
 
   if (window.location.pathname.split("/").length <= 4) {
     return <Navigate to={`${window.location.pathname}/about`} />;
@@ -69,7 +67,13 @@ export default function Technician(props) {
     <TechnicianContext.Provider value={technician}>
       <section className="bg-slate-100">
         <div className="container w-4/5 mx-auto mt-10 bg-white border-b-2 relative">
-          {hire && <HireTechnician setHire={setHire} setHired={setHired} />}
+          {hire && (
+            <HireTechnician
+              setHire={setHire}
+              setHired={setHired}
+              verifyToken={verifyToken}
+            />
+          )}
           <div className="flex items-center space-x-4 p-3">
             <div className="tech-photo">
               <img

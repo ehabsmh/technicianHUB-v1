@@ -13,7 +13,7 @@ export default function Technician(props) {
         </div>
         <Link to={`${technician._id}`}>
           <img
-            src="../assets/images/default.jpg"
+            src="/assets/images/default.jpg"
             alt=""
             className="rounded-xl technician-picture"
           />

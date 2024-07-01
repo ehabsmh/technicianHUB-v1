@@ -24,6 +24,7 @@ function App() {
       const userToken = localStorage.getItem("token");
 
       const { user } = jwtDecode(userToken);
+      console.log(user);
       setUser(user);
       return user;
     }
@@ -113,7 +114,7 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <ClientRoute>
-                    <Technician user={user} />
+                    <Technician user={user} verifyToken={verifyToken} />
                   </ClientRoute>
                 </ProtectedRoutes>
               }

@@ -23,25 +23,24 @@ export default function HireTechnician(props) {
         { headers: { token: localStorage.getItem("token") } }
       );
 
-      console.log(data);
       const res = await axios.post(
         "http://localhost:3000/api/v1/auth/refreshToken",
         {},
         { headers: { token: localStorage.getItem("token") } }
       );
 
-      console.log(res);
       setIsLoading(false);
       props.setHire(false);
       const { token } = res.data;
-      console.log(token);
       localStorage.setItem("token", token);
+      props.verifyToken();
       props.setHired(true);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
     }
   };
+
   return (
     <div
       className="layer absolute top-0 w-full h-full bg-sec flex justify-center
@@ -61,7 +60,8 @@ export default function HireTechnician(props) {
         className="mt-14"
         onSubmit={sendJobRequest}
         onChange={(e) => {
-          setJobRequest({ ...jobRequest, [e.target.name]: e.target.value });
+          jobRequest[e.target.name] = e.target.value;
+          console.log(jobRequest);
         }}
       >
         <input
