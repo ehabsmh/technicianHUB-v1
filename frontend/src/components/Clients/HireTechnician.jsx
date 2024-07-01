@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import TechnicianContext from "../Global/Store";
 import axios from "axios";
 import Spinner from "../Spinner";
@@ -36,7 +36,7 @@ export default function HireTechnician(props) {
       const { token } = res.data;
       console.log(token);
       localStorage.setItem("token", token);
-      // props.setHired(true);
+      props.setHired(true);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -61,8 +61,7 @@ export default function HireTechnician(props) {
         className="mt-14"
         onSubmit={sendJobRequest}
         onChange={(e) => {
-          jobRequest[e.target.name] = e.target.value;
-          console.log(jobRequest);
+          setJobRequest({ ...jobRequest, [e.target.name]: e.target.value });
         }}
       >
         <input
@@ -84,7 +83,11 @@ export default function HireTechnician(props) {
             type="submit"
             className="register-buttons bg-black hover:bg-gray-900"
           >
-            <Spinner />
+            <Spinner
+              spinnerColor="#388da8"
+              spinnerSize="20px"
+              spinnerClassName="register-spinner"
+            />
           </button>
         ) : (
           <button
