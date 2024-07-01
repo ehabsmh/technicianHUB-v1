@@ -97,7 +97,9 @@ export default function Technician(props) {
                 </h3>
                 <h3 className="pl-7">
                   Rate{" "}
-                  <span className="nunito-bold">{technician.rate} / 5</span>
+                  <span className="nunito-bold">
+                    {Number(technician.rate).toFixed(1)} / 5
+                  </span>
                 </h3>
               </div>
             </div>
