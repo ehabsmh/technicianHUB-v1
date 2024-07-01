@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Link,
   Navigate,
@@ -11,15 +11,16 @@ import {
 import "../../styles/register.css";
 import TechnicianContext from "../../components/Global/Store";
 import HireTechnician from "../../components/Clients/HireTechnician";
+import AuthContext from "../../components/Global/AuthContext";
 
-export default function Technician(props) {
+export default function Technician() {
   const [technician, setTechnician] = useState({});
   const [hire, setHire] = useState(false);
   const [hired, setHired] = useState(false);
   const { id } = useParams();
   const location = useLocation();
   const active = location.pathname;
-  const { user, verifyToken } = props;
+  const { loggedUser } = useContext(AuthContext);
 
   const handleHire = () => {
     setHire(true);
@@ -50,7 +51,7 @@ export default function Technician(props) {
 
   useEffect(() => {
     const checkHiredTechs = () => {
-      const { assignedTechIds } = user.customerDetails;
+      const { assignedTechIds } = loggedUser.customerDetails;
       if (assignedTechIds.includes(technician._id)) {
         setHired(true);
       }
@@ -71,7 +72,7 @@ export default function Technician(props) {
             <HireTechnician
               setHire={setHire}
               setHired={setHired}
-              verifyToken={verifyToken}
+              // verifyToken={verifyToken}
             />
           )}
           <div className="flex items-center space-x-4 p-3">

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ClientLanding from "./pages/Clients/ClientLanding";
 import TechLanding from "./pages/Technicians/TechLanding";
 import Spinner from "./components/Spinner";
@@ -8,37 +8,40 @@ import Navbar from "./components/Navbar";
 import Register from "./pages/Global/Register";
 import ConfirmEmail from "./pages/Global/ConfirmEmail";
 import Login from "./pages/Global/Login";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import Technicians from "./pages/Clients/Technicians";
 import Technician from "./pages/Clients/Technician";
 import TechnicianBio from "./pages/Global/TechnicianBio";
 import TechnicianReviews from "./pages/Global/TechnicianReviews";
+import AuthContext from "./components/Global/AuthContext";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const { loggedUser, decodeToken } = useContext(AuthContext);
 
-  const verifyToken = () => {
-    if (localStorage.getItem("token")) {
-      const userToken = localStorage.getItem("token");
+  // const verifyToken = () => {
+  //   if (localStorage.getItem("token")) {
+  //     const userToken = localStorage.getItem("token");
 
-      const { user } = jwtDecode(userToken);
-      console.log(user);
-      setUser(user);
-      return user;
-    }
-  };
+  //     const { user } = jwtDecode(userToken);
+  //     console.log(user);
+  //     setUser(user);
+  //     return user;
+  //   }
+  // };
 
   useEffect(() => {
     window.addEventListener("load", () => {
       setLoading(false);
     });
-    verifyToken();
+    // decodeToken();
   }, []);
 
   const ProtectedRoutes = (props) => {
-    if (user) {
+    console.log(loggedUser);
+    if (loggedUser) {
       return props.children;
     }
 
@@ -46,24 +49,24 @@ function App() {
   };
 
   const ClientRoute = (props) => {
-    if (user.role === "user") {
+    if (loggedUser.role === "user") {
       return props.children;
     }
     return <Navigate to="/tech" />;
   };
 
   const TechnicianRoute = (props) => {
-    if (user.role === "technician") {
+    if (loggedUser.role === "technician") {
       return props.children;
     }
     return <Navigate to="/client" />;
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    navigate("/login");
-  };
+  // const logout = () => {
+  //   localStorage.removeItem("token");
+  //   setLoggedUser(null);
+  //   navigate("/login");
+  // };
 
   return (
     <>
@@ -75,7 +78,7 @@ function App() {
         />
       ) : (
         <>
-          <Navbar user={user} logout={logout} />
+          <Navbar />
           <Routes>
             <Route
               path={"/client/"}
@@ -114,7 +117,7 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <ClientRoute>
-                    <Technician user={user} verifyToken={verifyToken} />
+                    <Technician />
                   </ClientRoute>
                 </ProtectedRoutes>
               }
@@ -124,7 +127,7 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <ClientRoute>
-                      <TechnicianReviews user={user} />
+                      <TechnicianReviews />
                     </ClientRoute>
                   </ProtectedRoutes>
                 }
@@ -150,10 +153,7 @@ function App() {
                 }
               />
             </Route>
-            <Route
-              path="/login"
-              element={<Login verifyToken={verifyToken} />}
-            />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element=<p>404 not found</p> />
             <Route path="/confirm-email" element={<ConfirmEmail />} />

@@ -2,23 +2,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "../styles/nav.css";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "./Global/AuthContext";
 
-export default function Navbar(props) {
+export default function Navbar() {
   const menuList = useRef(null);
   const menuListToggle = () => {
     menuList.current.classList.toggle("opacity-0");
     menuList.current.classList.toggle("z-20");
   };
+  const { loggedUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const { user, logout } = props;
   return (
     <>
       <nav className="py-5 relative lg:static">
         <div className="container w-11/12 mx-auto flex justify-between items-center nunito-medium text-nav-color">
           <div className="logo w-40 md:w-52">
-            <Link to={user?.role === "technician" ? "/tech" : "/client"}>
+            <Link to={loggedUser?.role === "technician" ? "/tech" : "/client"}>
               <img src="/assets/images/logo2.png" alt="" className="" />
             </Link>
           </div>
@@ -32,18 +34,20 @@ export default function Navbar(props) {
               className="menu-list opacity-0 -z-10 lg:opacity-100 lg:p-0 p-4"
               ref={menuList}
             >
-              {user ? (
+              {loggedUser ? (
                 <>
                   <li className="lg:px-8 lg:py-0 py-2">
                     <Link
                       onClick={menuListToggle}
-                      to={user?.role === "technician" ? "/tech" : "/client"}
+                      to={
+                        loggedUser?.role === "technician" ? "/tech" : "/client"
+                      }
                       className="hover:text-sec duration-300"
                     >
                       Home
                     </Link>
                   </li>
-                  {user?.role === "user" && (
+                  {loggedUser?.role === "user" && (
                     <li className="lg:px-8 lg:py-0 py-2">
                       <Link
                         to="/technicians/plumber"
@@ -56,7 +60,7 @@ export default function Navbar(props) {
                     </li>
                   )}
 
-                  {user?.role === "user" && (
+                  {loggedUser?.role === "user" && (
                     <li className="lg:px-8 lg:py-0 py-2">
                       <a
                         onClick={menuListToggle}
@@ -91,7 +95,7 @@ export default function Navbar(props) {
                     <a
                       onClick={() => {
                         menuListToggle();
-                        logout();
+                        logout(navigate);
                       }}
                       href="#"
                       className="hover:text-sec duration-300"

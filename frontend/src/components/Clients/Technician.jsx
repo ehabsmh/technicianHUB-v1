@@ -8,7 +8,7 @@ export default function Technician(props) {
       <div className="technician relative px-3">
         <div className="rate-container">
           <h4 className="technician-rate text-white">
-            {technician.technicianDetails.rate}/5
+            {Number(Math.round(technician.technicianDetails.rate))}/5
           </h4>
         </div>
         <Link to={`${technician._id}`}>

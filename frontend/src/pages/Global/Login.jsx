@@ -1,45 +1,13 @@
 /* eslint-disable react/prop-types */
-import axios from "axios";
-import { useState } from "react";
+import { useContext } from "react";
 import Spinner from "../../components/Spinner";
+import AuthContext from "../../components/Global/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-export default function Login(props) {
-  const [loading, setLoading] = useState(false);
-  const [user] = useState({});
-  const [errormsg, setErrormsg] = useState("");
-
+export default function Login() {
+  const { errormsg, submitLogin, collectUserData, loading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
-
-  const collectUserData = (e) => {
-    user[e.target.name] = e.target.value;
-    console.log(user);
-  };
-
-  const submitLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/v1/auth/login",
-        user
-      );
-
-      setLoading(false);
-      setErrormsg("");
-      localStorage.setItem("token", data.token);
-      const decodedUser = props.verifyToken();
-      if (decodedUser.role === "user") navigate("/client");
-      if (decodedUser.role === "technician") navigate("/tech");
-    } catch (error) {
-      if (error.response) {
-        setErrormsg(error.response.data.error);
-      }
-      setLoading(false);
-      console.log(error);
-    }
-  };
   return (
     <>
       <section id="login" className="bg-gray-100 h-screen">
@@ -65,7 +33,9 @@ export default function Login(props) {
                 <div>
                   <form
                     action=""
-                    onSubmit={submitLogin}
+                    onSubmit={(e) => {
+                      submitLogin(e, navigate);
+                    }}
                     onChange={collectUserData}
                   >
                     <input

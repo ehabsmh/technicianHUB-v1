@@ -5,35 +5,30 @@ import { useContext, useState } from "react";
 import TechnicianContext from "../Global/Store";
 import axios from "axios";
 import Spinner from "../Spinner";
+import AuthContext from "../Global/AuthContext";
 
 export default function HireTechnician(props) {
   const technician = useContext(TechnicianContext);
   const [jobRequest, setJobRequest] = useState({ requestTo: technician._id });
   const [isLoading, setIsLoading] = useState(false);
-
+  const { refreshToken } = useContext(AuthContext);
   const sendJobRequest = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
 
+    const oldToken = localStorage.getItem("token");
+
     try {
       await axios.post(
         "http://localhost:3000/api/v1/users/jobRequests",
         jobRequest,
-        { headers: { token: localStorage.getItem("token") } }
+        { headers: { token: oldToken } }
       );
 
-      const res = await axios.post(
-        "http://localhost:3000/api/v1/auth/refreshToken",
-        {},
-        { headers: { token: localStorage.getItem("token") } }
-      );
-
+      refreshToken(oldToken);
       setIsLoading(false);
       props.setHire(false);
-      const { token } = res.data;
-      localStorage.setItem("token", token);
-      props.verifyToken();
       props.setHired(true);
     } catch (error) {
       console.log(error);

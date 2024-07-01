@@ -7,14 +7,15 @@ import Review from "../../components/Global/Review";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "react-rating";
 import { faPlusCircle, faStar } from "@fortawesome/free-solid-svg-icons";
+import AuthContext from "../../components/Global/AuthContext";
 
-export default function TechnicianReviews(props) {
+export default function TechnicianReviews() {
   const technician = useContext(TechnicianContext);
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState("");
   const [rate, setRate] = useState(1);
   const reviewForm = useRef(null);
-  const { user } = props;
+  const { loggedUser } = useContext(AuthContext);
 
   const getTechnicianReviews = async () => {
     if (!technician || !technician._id) {
@@ -60,11 +61,11 @@ export default function TechnicianReviews(props) {
   };
 
   const checkUserReview = () => {
-    if (!user || !user._id) {
+    if (!loggedUser || !loggedUser._id) {
       return;
     }
 
-    return reviews.find((review) => review.reviewedBy._id === user._id);
+    return reviews.find((review) => review.reviewedBy._id === loggedUser._id);
   };
 
   useEffect(() => {
@@ -85,10 +86,13 @@ export default function TechnicianReviews(props) {
     <>
       {checkUserReview() ? (
         ""
-      ) : user?.role === "user" ? (
+      ) : loggedUser?.role === "user" ? (
         <div className="add-review relative w-32 mb-10 flex items-center">
-          {user.picture ? (
-            <img src={user.picture} alt={`${user.firstName} photo`} />
+          {loggedUser.picture ? (
+            <img
+              src={loggedUser.picture}
+              alt={`${loggedUser.firstName} photo`}
+            />
           ) : (
             <img src="/assets/images/default.jpg" alt="No photo" />
           )}
@@ -136,7 +140,7 @@ export default function TechnicianReviews(props) {
         <p>No Reviews found.</p>
       ) : (
         reviews.map((review, i) => (
-          <Review key={i} review={review} userId={user._id} />
+          <Review key={i} review={review} userId={loggedUser._id} />
         ))
       )}
     </>
