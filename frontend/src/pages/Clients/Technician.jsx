@@ -59,7 +59,7 @@ export default function Technician(props) {
     getTechnician();
     linkClick(active);
     checkHiredTechs();
-  }, [technician]);
+  }, [technician, hired]);
 
   if (window.location.pathname.split("/").length <= 4) {
     return <Navigate to={`${window.location.pathname}/about`} />;
@@ -100,8 +100,8 @@ export default function Technician(props) {
           </div>
           <div className="contacts mt-7 p-3">
             {hired ? (
-              <button className="w-36 py-3 px-5 mr-11 bg-sec text-center register-buttons text-white hover:bg-sec-active">
-                Already hired
+              <button className="w-36 py-3 px-5 mr-11 bg-sec text-center register-buttons cursor-default text-white ">
+                Hired
               </button>
             ) : (
               <button
