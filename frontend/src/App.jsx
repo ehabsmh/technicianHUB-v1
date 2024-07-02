@@ -103,104 +103,108 @@ function App() {
                 </ProtectedRoutes>
               }
             />
-            <Route
-              path="profile"
-              element={
-                <ProtectedRoutes>
-                  <TechnicianRoute>
-                    <Profile />
-                  </TechnicianRoute>
-                </ProtectedRoutes>
-              }
-            >
-              <Route
-                path="about"
-                element={
-                  <ProtectedRoutes>
-                    <TechnicianRoute>
-                      <TechnicianBio />
-                    </TechnicianRoute>
-                  </ProtectedRoutes>
-                }
-              />
-              <Route
-                path="reviews"
-                element={
-                  <ProtectedRoutes>
-                    <TechnicianRoute>
-                      <TechnicianReviews />
-                    </TechnicianRoute>
-                  </ProtectedRoutes>
-                }
-              />
-              <Route
-                path="requests"
-                element={
-                  <ProtectedRoutes>
-                    <TechnicianRoute>
-                      <JobRequests />
-                    </TechnicianRoute>
-                  </ProtectedRoutes>
-                }
-              />
-            </Route>
-
-            <Route
-              path="technicians/:service"
-              element={
-                <ProtectedRoutes>
-                  <ClientRoute>
-                    <Technicians />
-                  </ClientRoute>
-                </ProtectedRoutes>
-              }
-            />
-            <Route
-              path="technicians/:service/:id"
-              element={
-                <ProtectedRoutes>
-                  <ClientRoute>
-                    <Technician />
-                  </ClientRoute>
-                </ProtectedRoutes>
-              }
-            >
-              <Route
-                path="reviews"
-                element={
-                  <ProtectedRoutes>
-                    <ClientRoute>
-                      <TechnicianReviews />
-                    </ClientRoute>
-                  </ProtectedRoutes>
-                }
-              />
-              <Route
-                path="about"
-                element={
-                  <ProtectedRoutes>
-                    <ClientRoute>
-                      <TechnicianBio />
-                    </ClientRoute>
-                  </ProtectedRoutes>
-                }
-              />
-              <Route
-                path="completed-jobs"
-                element={
-                  <ProtectedRoutes>
-                    <ClientRoute>
-                      <p>Completed Jobs</p>
-                    </ClientRoute>
-                  </ProtectedRoutes>
-                }
-              />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element=<p>404 not found</p> />
-            <Route path="/confirm-email" element={<ConfirmEmail />} />
           </Routes>
+          <div className="container w-4/5 mx-auto relative">
+            <Routes>
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <Profile />
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              >
+                <Route
+                  path="about"
+                  element={
+                    <ProtectedRoutes>
+                      <TechnicianRoute>
+                        <TechnicianBio />
+                      </TechnicianRoute>
+                    </ProtectedRoutes>
+                  }
+                />
+                <Route
+                  path="reviews"
+                  element={
+                    <ProtectedRoutes>
+                      <TechnicianRoute>
+                        <TechnicianReviews />
+                      </TechnicianRoute>
+                    </ProtectedRoutes>
+                  }
+                />
+                <Route
+                  path="requests"
+                  element={
+                    <ProtectedRoutes>
+                      <TechnicianRoute>
+                        <JobRequests />
+                      </TechnicianRoute>
+                    </ProtectedRoutes>
+                  }
+                />
+              </Route>
+
+              <Route
+                path="technicians/:service"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <Technicians />
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="technicians/:service/:id"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <Technician />
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              >
+                <Route
+                  path="reviews"
+                  element={
+                    <ProtectedRoutes>
+                      <ClientRoute>
+                        <TechnicianReviews />
+                      </ClientRoute>
+                    </ProtectedRoutes>
+                  }
+                />
+                <Route
+                  path="about"
+                  element={
+                    <ProtectedRoutes>
+                      <ClientRoute>
+                        <TechnicianBio />
+                      </ClientRoute>
+                    </ProtectedRoutes>
+                  }
+                />
+                <Route
+                  path="completed-jobs"
+                  element={
+                    <ProtectedRoutes>
+                      <ClientRoute>
+                        <p>Completed Jobs</p>
+                      </ClientRoute>
+                    </ProtectedRoutes>
+                  }
+                />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              {/* <Route path="*" element=<p>404 not found</p> /> */}
+              <Route path="/confirm-email" element={<ConfirmEmail />} />
+            </Routes>
+          </div>
         </>
       )}
     </>
