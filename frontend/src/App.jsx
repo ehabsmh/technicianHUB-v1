@@ -103,8 +103,6 @@ function App() {
                 </ProtectedRoutes>
               }
             />
-          </Routes>
-          <Routes>
             <Route
               path="profile"
               element={
