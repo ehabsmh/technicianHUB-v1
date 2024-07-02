@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import JobRequest from "../../components/Technicians/JobRequest";
 import axios from "axios";
-import { useOutletContext } from "react-router-dom";
 
 export default function JobRequests() {
   const [jobRequests, setJobRequests] = useState([]);
-  const { jobReqLayerRef } = useOutletContext();
 
   const getJobRequests = async () => {
     const options = {
@@ -32,13 +30,7 @@ export default function JobRequests() {
       {jobRequests.length ? (
         jobRequests.map((jobRequest, i) => {
           console.log(jobRequest);
-          return (
-            <JobRequest
-              key={i}
-              job={jobRequest}
-              jobReqLayerRef={jobReqLayerRef}
-            />
-          );
+          return <JobRequest key={i} job={jobRequest} />;
         })
       ) : (
         <p className="text-end nunito-bold text-gray-400">No jobs found</p>
