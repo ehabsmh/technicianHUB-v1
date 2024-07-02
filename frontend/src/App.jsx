@@ -14,6 +14,8 @@ import Technician from "./pages/Clients/Technician";
 import TechnicianBio from "./pages/Global/TechnicianBio";
 import TechnicianReviews from "./pages/Global/TechnicianReviews";
 import AuthContext from "./components/Global/AuthContext";
+import Profile from "./pages/Technicians/Profile";
+import JobRequests from "./pages/Technicians/JobRequests";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -101,6 +103,47 @@ function App() {
                 </ProtectedRoutes>
               }
             />
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoutes>
+                  <TechnicianRoute>
+                    <Profile />
+                  </TechnicianRoute>
+                </ProtectedRoutes>
+              }
+            >
+              <Route
+                path="about"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <TechnicianBio />
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="reviews"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <TechnicianReviews />
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="requests"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <JobRequests />
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              />
+            </Route>
 
             <Route
               path="technicians/:service"
