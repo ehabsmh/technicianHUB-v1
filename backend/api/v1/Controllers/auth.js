@@ -68,16 +68,17 @@ class AuthController {
         createdAt: 0,
         __v: 0,
       }
-      const user = await User.findOne({ email }, projection);
+      const userDoc = await User.findOne({ email }, projection);
 
-      if (!user || !compareSync(password, user.password)) {
+      if (!userDoc || !compareSync(password, userDoc.password)) {
         return res.status(401).json({ "error": "Incorrect email or password" });
       }
 
-      if (user && !user.emailConfirmed) {
+      if (userDoc && !userDoc.emailConfirmed) {
         return res.status(401).json({ "error": "Confirm your email" });
       }
 
+      const user = userDoc.toObject();
       delete user.emailConfirmed;
       delete user.password;
 
