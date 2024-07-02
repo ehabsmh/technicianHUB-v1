@@ -83,7 +83,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route
-              path={"/client/"}
+              path={"/client"}
               element={
                 <ProtectedRoutes>
                   <ClientRoute>
@@ -94,7 +94,7 @@ function App() {
             />
 
             <Route
-              path="/tech/"
+              path="/tech"
               element={
                 <ProtectedRoutes>
                   <TechnicianRoute>
@@ -104,107 +104,105 @@ function App() {
               }
             />
           </Routes>
-          <div className="container w-4/5 mx-auto relative">
-            <Routes>
+          <Routes>
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoutes>
+                  <TechnicianRoute>
+                    <Profile />
+                  </TechnicianRoute>
+                </ProtectedRoutes>
+              }
+            >
               <Route
-                path="profile"
+                path="about"
                 element={
                   <ProtectedRoutes>
                     <TechnicianRoute>
-                      <Profile />
+                      <TechnicianBio />
                     </TechnicianRoute>
                   </ProtectedRoutes>
                 }
-              >
-                <Route
-                  path="about"
-                  element={
-                    <ProtectedRoutes>
-                      <TechnicianRoute>
-                        <TechnicianBio />
-                      </TechnicianRoute>
-                    </ProtectedRoutes>
-                  }
-                />
-                <Route
-                  path="reviews"
-                  element={
-                    <ProtectedRoutes>
-                      <TechnicianRoute>
-                        <TechnicianReviews />
-                      </TechnicianRoute>
-                    </ProtectedRoutes>
-                  }
-                />
-                <Route
-                  path="requests"
-                  element={
-                    <ProtectedRoutes>
-                      <TechnicianRoute>
-                        <JobRequests />
-                      </TechnicianRoute>
-                    </ProtectedRoutes>
-                  }
-                />
-              </Route>
-
+              />
               <Route
-                path="technicians/:service"
+                path="reviews"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <TechnicianReviews />
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="requests"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <JobRequests />
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              />
+            </Route>
+
+            <Route
+              path="technicians/:service"
+              element={
+                <ProtectedRoutes>
+                  <ClientRoute>
+                    <Technicians />
+                  </ClientRoute>
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="technicians/:service/:id"
+              element={
+                <ProtectedRoutes>
+                  <ClientRoute>
+                    <Technician />
+                  </ClientRoute>
+                </ProtectedRoutes>
+              }
+            >
+              <Route
+                path="reviews"
                 element={
                   <ProtectedRoutes>
                     <ClientRoute>
-                      <Technicians />
+                      <TechnicianReviews />
                     </ClientRoute>
                   </ProtectedRoutes>
                 }
               />
               <Route
-                path="technicians/:service/:id"
+                path="about"
                 element={
                   <ProtectedRoutes>
                     <ClientRoute>
-                      <Technician />
+                      <TechnicianBio />
                     </ClientRoute>
                   </ProtectedRoutes>
                 }
-              >
-                <Route
-                  path="reviews"
-                  element={
-                    <ProtectedRoutes>
-                      <ClientRoute>
-                        <TechnicianReviews />
-                      </ClientRoute>
-                    </ProtectedRoutes>
-                  }
-                />
-                <Route
-                  path="about"
-                  element={
-                    <ProtectedRoutes>
-                      <ClientRoute>
-                        <TechnicianBio />
-                      </ClientRoute>
-                    </ProtectedRoutes>
-                  }
-                />
-                <Route
-                  path="completed-jobs"
-                  element={
-                    <ProtectedRoutes>
-                      <ClientRoute>
-                        <p>Completed Jobs</p>
-                      </ClientRoute>
-                    </ProtectedRoutes>
-                  }
-                />
-              </Route>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              {/* <Route path="*" element=<p>404 not found</p> /> */}
-              <Route path="/confirm-email" element={<ConfirmEmail />} />
-            </Routes>
-          </div>
+              />
+              <Route
+                path="completed-jobs"
+                element={
+                  <ProtectedRoutes>
+                    <ClientRoute>
+                      <p>Completed Jobs</p>
+                    </ClientRoute>
+                  </ProtectedRoutes>
+                }
+              />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            {/* <Route path="*" element=<p>404 not found</p> /> */}
+            <Route path="/confirm-email" element={<ConfirmEmail />} />
+          </Routes>
         </>
       )}
     </>
