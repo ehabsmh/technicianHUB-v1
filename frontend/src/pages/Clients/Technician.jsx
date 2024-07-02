@@ -66,7 +66,7 @@ export default function Technician() {
 
   return (
     <TechnicianContext.Provider value={technician}>
-      <section className="">
+      <section className="container mx-auto w-4/5 relative">
         {hire && (
           <HireTechnician
             setHire={setHire}
