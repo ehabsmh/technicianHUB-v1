@@ -30,13 +30,11 @@ class JobRequestController {
 
     const projection = {
       requestTo: 0,
-      title: 0,
-      description: 0,
       __v: 0
     }
 
     const jobs = await JobRequest.find({ requestTo: techId }, projection)
-      .populate('requestBy', "firstName lastName picture");
+      .populate('requestBy', "firstName lastName picture address phone email");
 
     if (jobs.length === 0) {
       return res.status(404).json({ jobs });
