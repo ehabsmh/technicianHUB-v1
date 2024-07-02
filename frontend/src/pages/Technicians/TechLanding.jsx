@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../../styles/landing.css";
 
 export default function TechLanding() {
@@ -13,9 +14,11 @@ export default function TechLanding() {
               <p className=" text-lg mb-10 text-heading-color">
                 Check your job requests and manage your profile.
               </p>
-              <button className="bg-sec rounded-3xl px-10 py-3 text-white hover:bg-cyan-700 duration-300 mb-5">
-                Get Started
-              </button>
+              <Link to={"/profile"}>
+                <button className="bg-sec rounded-3xl px-10 py-3 text-white hover:bg-cyan-700 duration-300 mb-5">
+                  Get Started
+                </button>
+              </Link>
               <img
                 src="/assets/images/get_started.png"
                 alt="get started"
