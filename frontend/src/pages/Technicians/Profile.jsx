@@ -10,7 +10,7 @@ export default function Profile() {
 
   return (
     <>
-      <section className="">
+      <section className="container w-4/5 mx-auto relative">
         <div className="flex items-center space-x-4 p-3">
           <div className="tech-photo">
             <img
@@ -80,8 +80,6 @@ export default function Profile() {
             </Link>
           </ul>
         </nav>
-      </section>
-      <section className="mt-7">
         <Outlet />
       </section>
     </>
