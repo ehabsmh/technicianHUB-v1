@@ -18,7 +18,7 @@ export default function TechnicianReviews() {
   const { loggedUser } = useContext(AuthContext);
 
   const getTechnicianReviews = async () => {
-    if (!technician || !technician._id) {
+    if (loggedUser.role === "user" && (!technician || !technician._id)) {
       return;
     }
 
@@ -27,9 +27,12 @@ export default function TechnicianReviews() {
     };
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/v1/users/technicians/${technician._id}/reviews`,
+        `http://localhost:3000/api/v1/users/technicians/${
+          loggedUser.role === "user" ? technician._id : loggedUser._id
+        }/reviews`,
         options
       );
+      console.log(data);
       setReviews(data.reviews);
     } catch (error) {
       console.log(error);
@@ -72,7 +75,7 @@ export default function TechnicianReviews() {
     getTechnicianReviews();
   }, [technician, review]);
 
-  if (!technician || !technician._id) {
+  if (loggedUser.role === "user" && (!technician || !technician._id)) {
     return (
       <Spinner
         spinnerColor="#388da8"
