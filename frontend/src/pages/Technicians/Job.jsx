@@ -1,16 +1,36 @@
 import Spinner from "../../components/Spinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/register.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import JobConfirm from "../../components/Technicians/JobConfirm";
+import JobCompleted from "../../components/Technicians/JobCompleted";
 
 export default function Job() {
   const [isLoading, setIsLoading] = useState(false);
-  const [jobState, setJobState] = useState("pending");
+  // const [jobState, setJobState] = useState("pending");
+  const [jobStatus, setJobStatus] = useState("pending");
   const [barProgress, setBarProgress] = useState("before:right-100");
   const { jobId } = useParams();
   // const [token, setToken] = useState(null);
+
+  const checkJobStatus = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/api/v1/technicians/jobState/${jobId}/status`,
+        { headers: { token: localStorage.getItem("token") } }
+      );
+      console.log(data);
+      setJobStatus(data.status);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Hello");
+    checkJobStatus();
+  });
 
   const completeJob = async () => {
     setIsLoading(true);
@@ -21,7 +41,7 @@ export default function Job() {
         { headers: { token: localStorage.getItem("token") } }
       );
       console.log(data);
-      localStorage.setItem("jobToken", data.token);
+      // localStorage.setItem("jobToken", data.token);
       setIsLoading(false);
     } catch (error) {
       console.log(error.response.data.error);
@@ -36,7 +56,7 @@ export default function Job() {
       </div>
       <section className="container mx-auto w-4/5 flex justify-center">
         <div className="w-full">
-          <p className="text-center mt-10 nunito-bold text-lg">{jobState}</p>
+          <p className="text-center mt-10 nunito-bold text-lg">{jobStatus}</p>
           <div
             className={`w-full h-2 bg-slate-400 mt-5 rounded-2xl relative
           before:absolute before:top-0 before:left-0 before:bottom-0 ${barProgress}
@@ -46,11 +66,10 @@ export default function Job() {
             You don&lsquo;t have access to the platform until you take action to
             the customer
           </p>
-          {localStorage.getItem("jobToken") ? (
-            <JobConfirm
-              setJobState={setJobState}
-              setBarProgress={setBarProgress}
-            />
+          {jobStatus === "pending confirmation" ? (
+            <JobConfirm setBarProgress={setBarProgress} />
+          ) : jobStatus === "completed" ? (
+            <JobCompleted setBarProgress={setBarProgress} />
           ) : (
             <div className="job-decision bg-neutral-200 rounded-md w-1/3 mx-auto mt-10 text-center p-5">
               <p className="mb-2">Please proceed to the customer...</p>

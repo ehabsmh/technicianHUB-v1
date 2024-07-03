@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
-export default function JobConfirm({ setBarProgress }) {
+export default function JobCompleted({ setBarProgress }) {
   useEffect(() => {
-    setBarProgress("before:right-1/2");
+    setBarProgress("before:right-0");
   });
 
   return (
@@ -16,12 +16,9 @@ export default function JobConfirm({ setBarProgress }) {
           className="text-green-500 text-6xl mr-10"
         />
         <div className="">
-          <p className="w-8/12 mb-5 nunito-medium">
-            Job completed, The platform will open again when the customer mark
-            job as completed.
-          </p>
+          <p className="w-8/12 mb-5 nunito-medium">Congratulations!</p>
           <p className="nunito-medium text-gray-400">
-            Thanks for your patience.
+            Job completed successfully.
           </p>
         </div>
       </div>
