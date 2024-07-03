@@ -18,6 +18,7 @@ import Profile from "./pages/Technicians/Profile";
 import JobRequests from "./pages/Technicians/JobRequests";
 import Job from "./pages/Technicians/Job";
 import MarkComplete from "./pages/Clients/MarkComplete";
+import JobEstablish from "./components/Technicians/JobEstablish";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -63,7 +64,9 @@ function App() {
         />
       ) : (
         <>
-          <Navbar />
+          <JobEstablish>
+            <Navbar />
+          </JobEstablish>
           <Routes>
             <Route
               path={"/client"}
@@ -81,7 +84,9 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <TechnicianRoute>
-                    <TechLanding />
+                    <JobEstablish>
+                      <TechLanding />
+                    </JobEstablish>
                   </TechnicianRoute>
                 </ProtectedRoutes>
               }
@@ -91,7 +96,9 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <TechnicianRoute>
-                    <Profile />
+                    <JobEstablish>
+                      <Profile />
+                    </JobEstablish>
                   </TechnicianRoute>
                 </ProtectedRoutes>
               }
@@ -101,7 +108,9 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <TechnicianRoute>
-                      <TechnicianBio />
+                      <JobEstablish>
+                        <TechnicianBio />
+                      </JobEstablish>
                     </TechnicianRoute>
                   </ProtectedRoutes>
                 }
@@ -111,7 +120,9 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <TechnicianRoute>
-                      <TechnicianReviews />
+                      <JobEstablish>
+                        <TechnicianReviews />
+                      </JobEstablish>
                     </TechnicianRoute>
                   </ProtectedRoutes>
                 }
@@ -121,7 +132,9 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <TechnicianRoute>
-                      <JobRequests />
+                      <JobEstablish>
+                        <JobRequests />
+                      </JobEstablish>
                     </TechnicianRoute>
                   </ProtectedRoutes>
                 }
@@ -200,10 +213,31 @@ function App() {
                 </ProtectedRoutes>
               }
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/login"
+              element={
+                <JobEstablish>
+                  <Login />
+                </JobEstablish>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <JobEstablish>
+                  <Register />
+                </JobEstablish>
+              }
+            />
             {/* <Route path="*" element=<p>404 not found</p> /> */}
-            <Route path="/confirm-email" element={<ConfirmEmail />} />
+            <Route
+              path="/confirm-email"
+              element={
+                <JobEstablish>
+                  <ConfirmEmail />
+                </JobEstablish>
+              }
+            />
           </Routes>
         </>
       )}
