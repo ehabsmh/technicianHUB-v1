@@ -8,6 +8,10 @@ export default function JobCompleted({ setBarProgress }) {
     setBarProgress("before:right-0");
   });
 
+  useEffect(() => {
+    localStorage.removeItem("jobId");
+  }, []);
+
   return (
     <>
       <div className="flex justify-center items-center mt-10 mx-auto">
