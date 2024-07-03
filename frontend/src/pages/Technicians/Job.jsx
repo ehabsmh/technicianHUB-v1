@@ -28,7 +28,6 @@ export default function Job() {
   };
 
   useEffect(() => {
-    console.log("Hello");
     checkJobStatus();
   });
 
@@ -48,6 +47,10 @@ export default function Job() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("jobId", jobId);
+  }, []);
 
   return (
     <>
