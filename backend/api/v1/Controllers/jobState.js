@@ -2,7 +2,7 @@ import JobRequest from "../../../models/jobRequest.js";
 import JobState from "../../../models/jobState.js";
 import User from "../../../models/users.js";
 import jwt from 'jsonwebtoken';
-import { sendEmail } from "../../../utils/sendEmail.js";
+import { sendCompleteJobEmail } from "../../../utils/sendCompleteJobEmail.js";
 
 class JobStateController {
   static async acceptJobRequest(req, res) {
@@ -52,11 +52,9 @@ class JobStateController {
     jobState.status = 'pending confirmation';
     jobState.save();
 
-    const token = await sendEmail(user, 'jobComplete.html', { jobState });
+    const token = jwt.sign({ user, jobState }, process.env.JWT_CONFIRM_EMAIL_SECRET);
+    const emailSent = await sendCompleteJobEmail(user, token);
 
-    if (!token) {
-      return res.status(500).json({ error: 'Failed to send email' });
-    }
     res.json({ message: 'Email sent to the user to confirm job completion', token });
   }
 
@@ -65,7 +63,7 @@ class JobStateController {
 
     try {
       const { jobState } = jwt.verify(jobToken, process.env.JWT_CONFIRM_EMAIL_SECRET);
-      console.log(jobState.status);
+
       if (jobState.status !== 'pending confirmation') {
         res.status(400).json({ error: 'Job not yet completed' });
       }
