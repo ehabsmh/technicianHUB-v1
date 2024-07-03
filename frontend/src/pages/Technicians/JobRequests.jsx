@@ -3,12 +3,14 @@ import JobRequest from "../../components/Technicians/JobRequest";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function JobRequests() {
   const [jobRequests, setJobRequests] = useState([]);
   const [activeJob, setActiveJob] = useState(null);
   const requestBy = activeJob?.requestBy;
   const jobReqLayerRef = useRef(null);
+  const navigate = useNavigate();
 
   const getJobRequests = async () => {
     const options = {
@@ -34,10 +36,27 @@ export default function JobRequests() {
         `http://localhost:3000/api/v1/technicians/jobRequests/${activeJob._id}`,
         options
       );
-      console.log(data);
       setActiveJob(null);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const acceptJobRequest = async () => {
+    console.log(activeJob._id);
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/v1/technicians/jobState`,
+        { requestNo: activeJob._id },
+        { headers: { token: localStorage.getItem("token") } }
+      );
+      console.log(data);
+      setActiveJob(null);
+      // setJobId(data.jobState._id);
+      // return <Navigate to={`/job/${jobId}`} />;
+      return navigate(`/job/${data.jobState._id}`);
+    } catch (error) {
+      console.log(error.response.data.error);
     }
   };
 
@@ -87,7 +106,10 @@ export default function JobRequests() {
                 <span>Description:</span> {activeJob.description}
               </p>
               <div>
-                <button className="mr-4 register-buttons bg-sec w-36 py-3 hover:bg-sec-active">
+                <button
+                  className="mr-4 register-buttons bg-sec w-36 py-3 hover:bg-sec-active"
+                  onClick={acceptJobRequest}
+                >
                   Accept
                 </button>
                 <button
