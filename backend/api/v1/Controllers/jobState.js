@@ -55,7 +55,7 @@ class JobStateController {
     const token = jwt.sign({ user, jobState }, process.env.JWT_CONFIRM_EMAIL_SECRET);
     const emailSent = await sendCompleteJobEmail(user, token);
 
-    res.json({ message: 'Email sent to the user to confirm job completion', token });
+    res.json({ message: 'Email sent to the user to confirm job completion' });
   }
 
   static async completeJobRequest(req, res) {
@@ -74,6 +74,19 @@ class JobStateController {
         return res.status(404).json({ error: 'Job not found' });
       }
       res.status(200).json({ message: 'Job completed successfully' });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  static async jobStatus(req, res) {
+    const { jobId } = req.params;
+    try {
+      const jobState = await JobState.findById(jobId, { status: 1 });
+      if (!jobState) {
+        return res.status(404).json({ error: 'Job not found' });
+      }
+      res.json({ status: jobState.status });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

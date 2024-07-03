@@ -32,5 +32,8 @@ techRouter.post('/jobState', technicianAuthorizations,
 techRouter.put('/jobState/:id', technicianAuthorizations,
     JobStateController.pendingConfirmation);
 
+techRouter.get('/jobState/:jobId/status', technicianAuthorizations,
+    JobStateController.jobStatus);
+
 
 export default techRouter;
