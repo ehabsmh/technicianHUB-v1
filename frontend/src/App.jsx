@@ -17,6 +17,7 @@ import AuthContext from "./components/Global/AuthContext";
 import Profile from "./pages/Technicians/Profile";
 import JobRequests from "./pages/Technicians/JobRequests";
 import Job from "./pages/Technicians/Job";
+import MarkComplete from "./pages/Clients/MarkComplete";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -189,6 +190,16 @@ function App() {
                 }
               />
             </Route>
+            <Route
+              path="job-completed/:jobToken"
+              element={
+                <ProtectedRoutes>
+                  <ClientRoute>
+                    <MarkComplete />
+                  </ClientRoute>
+                </ProtectedRoutes>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             {/* <Route path="*" element=<p>404 not found</p> /> */}
