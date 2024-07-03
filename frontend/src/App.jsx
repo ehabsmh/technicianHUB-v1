@@ -16,29 +16,17 @@ import TechnicianReviews from "./pages/Global/TechnicianReviews";
 import AuthContext from "./components/Global/AuthContext";
 import Profile from "./pages/Technicians/Profile";
 import JobRequests from "./pages/Technicians/JobRequests";
+import Job from "./pages/Technicians/Job";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  // const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const { loggedUser, decodeToken } = useContext(AuthContext);
-
-  // const verifyToken = () => {
-  //   if (localStorage.getItem("token")) {
-  //     const userToken = localStorage.getItem("token");
-
-  //     const { user } = jwtDecode(userToken);
-  //     console.log(user);
-  //     setUser(user);
-  //     return user;
-  //   }
-  // };
+  const { loggedUser } = useContext(AuthContext);
 
   useEffect(() => {
     window.addEventListener("load", () => {
       setLoading(false);
     });
-    // decodeToken();
   }, []);
 
   const ProtectedRoutes = (props) => {
@@ -63,12 +51,6 @@ function App() {
     }
     return <Navigate to="/client" />;
   };
-
-  // const logout = () => {
-  //   localStorage.removeItem("token");
-  //   setLoggedUser(null);
-  //   navigate("/login");
-  // };
 
   return (
     <>
@@ -144,6 +126,17 @@ function App() {
                 }
               />
             </Route>
+
+            <Route
+              path="/job/:jobId"
+              element={
+                <ProtectedRoutes>
+                  <TechnicianRoute>
+                    <Job />
+                  </TechnicianRoute>
+                </ProtectedRoutes>
+              }
+            />
 
             <Route
               path="technicians/:service"
