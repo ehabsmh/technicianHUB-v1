@@ -55,7 +55,7 @@ class JobStateController {
     const token = jwt.sign({ user, jobState }, process.env.JWT_CONFIRM_EMAIL_SECRET);
     const emailSent = await sendCompleteJobEmail(user, token);
 
-    res.json({ message: 'Email sent to the user to confirm job completion' });
+    res.json({ message: 'Email sent to the user to confirm job completion', jobReq: jobState.requestNo });
   }
 
   static async completeJobRequest(req, res) {
