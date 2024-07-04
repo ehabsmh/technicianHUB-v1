@@ -3,7 +3,7 @@ import JobRequest from "../../components/Technicians/JobRequest";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function JobRequests() {
   const [jobRequests, setJobRequests] = useState([]);
@@ -21,9 +21,10 @@ export default function JobRequests() {
         `http://localhost:3000/api/v1/technicians/jobRequests`,
         options
       );
+
       setJobRequests(data.jobs);
     } catch (error) {
-      console.log(error);
+      setJobRequests([]);
     }
   };
 
@@ -36,6 +37,7 @@ export default function JobRequests() {
         `http://localhost:3000/api/v1/technicians/jobRequests/${activeJob._id}`,
         options
       );
+      console.log(data);
       setActiveJob(null);
     } catch (error) {
       console.log(error);
@@ -51,9 +53,7 @@ export default function JobRequests() {
         { headers: { token: localStorage.getItem("token") } }
       );
       console.log(data);
-      setActiveJob(null);
-      // setJobId(data.jobState._id);
-      // return <Navigate to={`/job/${jobId}`} />;
+      await refuseJobRequests();
       return navigate(`/job/${data.jobState._id}`);
     } catch (error) {
       console.log(error.response.data.error);
