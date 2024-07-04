@@ -67,12 +67,13 @@ class JobRequestController {
     const requestId = req.params.id;
 
     const job = await JobRequest.findOneAndDelete({ _id: requestId, requestTo: techId }, { new: true });
-    console.log(job);
+
     if (!job) {
       return res.status(404).json({ error: "Job request not found" });
     }
 
     await User.findByIdAndUpdate(job.requestBy, { $pull: { 'customerDetails.assignedTechIds': techId } });
+
     res.status(200).json({ message: "Job request refused successfully" });
 
   }
