@@ -47,7 +47,7 @@ export default function Profile() {
         </div>
 
         <nav className="mt-16 mb-7 relative before:absolute before:-top-5 before:bg-slate-200 before:h-0.5 before:w-full">
-          <ul className="flex w-1/3 justify-between p-5 items-center">
+          <ul className="flex w-1/2 justify-between p-5 items-center">
             <Link
               to={"about"}
               className={`technician_profile-link ${
@@ -76,6 +76,16 @@ export default function Profile() {
             >
               <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
                 Job requests
+              </li>
+            </Link>
+            <Link
+              to={"settings"}
+              className={`technician_profile-link ${
+                active.includes("settings") ? "bg-slate-200" : ""
+              }`}
+            >
+              <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
+                Settings
               </li>
             </Link>
           </ul>
