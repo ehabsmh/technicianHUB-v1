@@ -53,6 +53,7 @@ export default function JobRequests() {
         { headers: { token: localStorage.getItem("token") } }
       );
       console.log(data);
+      localStorage.setItem("jobId", data.jobState._id);
       await refuseJobRequests();
       return navigate(`/job/${data.jobState._id}`);
     } catch (error) {
@@ -134,7 +135,7 @@ export default function JobRequests() {
             <JobRequest key={i} job={jobRequest} setActiveJob={setActiveJob} />
           ))
         ) : (
-          <p className="text-end nunito-bold text-gray-400">No jobs found</p>
+          <p className="nunito-bold text-gray-400">No jobs found.</p>
         )}
       </div>
     </>
