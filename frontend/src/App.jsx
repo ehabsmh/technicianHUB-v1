@@ -19,6 +19,7 @@ import JobRequests from "./pages/Technicians/JobRequests";
 import Job from "./pages/Technicians/Job";
 import MarkComplete from "./pages/Clients/MarkComplete";
 import JobEstablish from "./components/Technicians/JobEstablish";
+import Settings from "./pages/Technicians/Settings";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -134,6 +135,18 @@ function App() {
                     <TechnicianRoute>
                       <JobEstablish>
                         <JobRequests />
+                      </JobEstablish>
+                    </TechnicianRoute>
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="settings"
+                element={
+                  <ProtectedRoutes>
+                    <TechnicianRoute>
+                      <JobEstablish>
+                        <Settings />
                       </JobEstablish>
                     </TechnicianRoute>
                   </ProtectedRoutes>
