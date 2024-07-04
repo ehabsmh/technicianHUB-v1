@@ -68,12 +68,12 @@ class JobStateController {
         res.status(400).json({ error: 'Job not yet completed' });
       }
 
-      await JobState.updateOne({ _id: jobState._id }, { status: 'completed' })
+      const job = await JobState.findByIdAndUpdate({ _id: jobState._id }, { status: 'completed' })
 
       if (!jobState) {
         return res.status(404).json({ error: 'Job not found' });
       }
-      res.status(200).json({ message: 'Job completed successfully' });
+      res.status(200).json({ message: 'Job completed successfully', job });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
