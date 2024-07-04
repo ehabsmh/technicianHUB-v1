@@ -60,7 +60,10 @@ export default function Settings() {
         <button
           type="submit"
           className="register-buttons text-white bg-sec w-4/5 hover:bg-sec-active"
-          onClick={updateTechnician}
+          onClick={() => {
+            updateTechnician();
+            closeModal();
+          }}
         >
           Update Bio
         </button>
