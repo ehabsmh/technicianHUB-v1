@@ -33,11 +33,11 @@ export default function JobRequests() {
       headers: { token: localStorage.getItem("token") },
     };
     try {
-      const { data } = await axios.delete(
+      await axios.delete(
         `http://localhost:3000/api/v1/technicians/jobRequests/${activeJob._id}`,
         options
       );
-      console.log(data);
+
       setActiveJob(null);
     } catch (error) {
       console.log(error);
@@ -45,14 +45,13 @@ export default function JobRequests() {
   };
 
   const acceptJobRequest = async () => {
-    console.log(activeJob._id);
     try {
       const { data } = await axios.post(
         `http://localhost:3000/api/v1/technicians/jobState`,
         { requestNo: activeJob._id },
         { headers: { token: localStorage.getItem("token") } }
       );
-      console.log(data);
+
       localStorage.setItem("jobId", data.jobState._id);
       await refuseJobRequests();
       return navigate(`/job/${data.jobState._id}`);

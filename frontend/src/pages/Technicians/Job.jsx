@@ -19,7 +19,7 @@ export default function Job(props) {
         `http://localhost:3000/api/v1/technicians/jobState/${jobId}/status`,
         { headers: { token: localStorage.getItem("token") } }
       );
-      console.log(data);
+
       setJobStatus(data.status);
     } catch (error) {
       console.log(error);
@@ -36,12 +36,12 @@ export default function Job(props) {
   const completeJob = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.put(
+      await axios.put(
         `http://localhost:3000/api/v1/technicians/jobState/${jobId}`,
         {},
         { headers: { token: localStorage.getItem("token") } }
       );
-      console.log(data);
+
       setIsLoading(false);
     } catch (error) {
       console.log(error.response.data.error);

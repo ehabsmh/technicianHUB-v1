@@ -27,7 +27,6 @@ export default function Technician() {
   };
 
   useEffect(() => {
-    console.log("HELLO!");
     const getTechnician = async () => {
       const options = {
         headers: { token: localStorage.getItem("token") },

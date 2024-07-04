@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Technician(props) {
   const { technician } = props;
+
   return (
     <>
       <div className="technician relative px-3">

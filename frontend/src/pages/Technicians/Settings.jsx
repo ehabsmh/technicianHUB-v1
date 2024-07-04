@@ -14,7 +14,6 @@ export default function Settings() {
 
   const collectUpdatedData = (e) => {
     updatedTechnician[e.target.name] = e.target.value;
-    console.log(updatedTechnician);
   };
 
   const updateTechnician = async () => {

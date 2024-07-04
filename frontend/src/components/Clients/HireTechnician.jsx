@@ -9,7 +9,7 @@ import AuthContext from "../Global/AuthContext";
 
 export default function HireTechnician(props) {
   const technician = useContext(TechnicianContext);
-  const [jobRequest, setJobRequest] = useState({ requestTo: technician._id });
+  const jobRequest = { requestTo: technician._id };
   const [isLoading, setIsLoading] = useState(false);
   const { refreshToken } = useContext(AuthContext);
   const sendJobRequest = async (e) => {
@@ -56,7 +56,6 @@ export default function HireTechnician(props) {
         onSubmit={sendJobRequest}
         onChange={(e) => {
           jobRequest[e.target.name] = e.target.value;
-          console.log(jobRequest);
         }}
       >
         <input

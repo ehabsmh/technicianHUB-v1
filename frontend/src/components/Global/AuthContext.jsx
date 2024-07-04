@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (token) {
       const { user } = jwtDecode(token);
-      console.log(user);
       setLoggedUser(user);
       return user;
     }
@@ -25,7 +24,6 @@ export const AuthProvider = ({ children }) => {
 
   const collectUserData = (e) => {
     user[e.target.name] = e.target.value;
-    console.log(user);
   };
 
   const submitLogin = async (e, navigate) => {
@@ -42,7 +40,6 @@ export const AuthProvider = ({ children }) => {
       setErrormsg("");
       localStorage.setItem("token", data.token);
       const decodedUser = decodeToken();
-      console.log(decodedUser);
       if (decodedUser.role === "user") navigate("/client");
       if (decodedUser.role === "technician") navigate("/tech");
     } catch (error) {
@@ -50,7 +47,6 @@ export const AuthProvider = ({ children }) => {
         setErrormsg(error.response.data.error);
       }
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -69,7 +65,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", newToken);
       decodeToken();
     } catch (error) {
-      console.error("Error refreshing token:", error);
       logout();
     }
   };

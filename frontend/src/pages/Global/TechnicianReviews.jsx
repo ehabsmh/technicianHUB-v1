@@ -32,7 +32,6 @@ export default function TechnicianReviews() {
         }/reviews`,
         options
       );
-      console.log(data);
       setReviews(data.reviews);
     } catch (error) {
       console.log(error);
@@ -55,7 +54,6 @@ export default function TechnicianReviews() {
         options.data,
         { headers: options.headers }
       );
-      console.log(data);
       setReviews([...reviews, data.review]);
       setReview("");
     } catch (error) {
