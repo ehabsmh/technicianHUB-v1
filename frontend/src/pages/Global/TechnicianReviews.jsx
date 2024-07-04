@@ -140,7 +140,7 @@ export default function TechnicianReviews() {
         ""
       )}
       {!reviews.length ? (
-        <p>No Reviews found.</p>
+        <p className="nunito-bold text-gray-400">No Reviews found.</p>
       ) : (
         reviews.map((review, i) => (
           <Review key={i} review={review} userId={loggedUser._id} />
