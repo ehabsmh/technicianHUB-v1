@@ -30,7 +30,7 @@ const jobStateSchema = new Schema({
     type: Types.ObjectId,
     ref: 'job_request',
     required: true,
-    unique: true
+    // unique: true
   },
   status: {
     type: String,
