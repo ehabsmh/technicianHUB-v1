@@ -10,6 +10,7 @@ class AuthController {
     const { role } = req.body
 
     try {
+      req.body.email = req.body.email.toLowerCase();
       const newUser = db.createUser(role, req.body);
       if (typeof newUser === 'string') {
         throw new FieldRequiredError(`${newUser} is required`);
