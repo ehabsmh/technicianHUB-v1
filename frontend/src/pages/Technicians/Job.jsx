@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Spinner from "../../components/Spinner";
 import { useEffect, useState } from "react";
 import "../../styles/register.css";
@@ -6,7 +7,7 @@ import { useParams } from "react-router-dom";
 import JobConfirm from "../../components/Technicians/JobConfirm";
 import JobCompleted from "../../components/Technicians/JobCompleted";
 
-export default function Job() {
+export default function Job(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobStatus, setJobStatus] = useState("pending");
   const [barProgress, setBarProgress] = useState("before:right-100");
@@ -28,6 +29,9 @@ export default function Job() {
   useEffect(() => {
     checkJobStatus();
   });
+  useEffect(() => {
+    props.setInJob(true);
+  }, []);
 
   const completeJob = async () => {
     setIsLoading(true);
@@ -68,7 +72,10 @@ export default function Job() {
           {jobStatus === "pending confirmation" ? (
             <JobConfirm setBarProgress={setBarProgress} />
           ) : jobStatus === "completed" ? (
-            <JobCompleted setBarProgress={setBarProgress} />
+            <JobCompleted
+              setBarProgress={setBarProgress}
+              setInJob={props.setInJob}
+            />
           ) : (
             <div className="job-decision bg-neutral-200 rounded-md w-1/3 mx-auto mt-10 text-center p-5">
               <p className="mb-2">Please proceed to the customer...</p>
