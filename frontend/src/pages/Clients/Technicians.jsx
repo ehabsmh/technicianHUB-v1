@@ -9,26 +9,30 @@ import Spinner from "../../components/Spinner";
 
 export default function Technicians() {
   const [technicians, setTechnicians] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { service } = useParams();
-  const getTechniciansByService = async () => {
-    const options = {
-      params: { service: service || "plumber" },
-      headers: { token: localStorage.getItem("token") },
-    };
-    try {
-      const { data } = await axios.get(
-        "http://localhost:3000/api/v1/users/technicians/",
-        options
-      );
-      setTechnicians(data.technicians);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
+    const getTechniciansByService = async () => {
+      const options = {
+        params: { service: service || "plumber" },
+        headers: { token: localStorage.getItem("token") },
+      };
+      try {
+        const { data } = await axios.get(
+          "http://localhost:3000/api/v1/users/technicians/",
+          options
+        );
+        console.log(data);
+        setTechnicians(data.technicians);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
     getTechniciansByService();
-  }, []);
+  }, [service]);
 
   return (
     <>
@@ -109,12 +113,15 @@ export default function Technicians() {
               </li>
             </ul>
           </div>
-          {!technicians.length ? (
+          {isLoading && (
             <Spinner
               spinnerColor="#388da8"
               spinnerSize="30px"
               spinnerClassName="register-spinner"
             />
+          )}
+          {!isLoading && !technicians.length ? (
+            <p className="nunito-bold text-gray-400">No technicians found.</p>
           ) : (
             <div className="technicians grid grid-cols-3 gap-10">
               {technicians.map((technician, i) => (
