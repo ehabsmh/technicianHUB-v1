@@ -113,15 +113,28 @@ export default function Register() {
         <div className="container w-11/12 md:w-4/5 mx-auto p-4">
           <div className="block md:grid md:grid-cols-2">
             <div className="hidden md:flex justify-center items-center features w-4/5">
-              <div className="card">
-                <h2 className="feature-title text-2xl nunito-bold">
-                  Hire your technician
-                </h2>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Illum expedita voluptates adipisci odio voluptatem obcaecati
-                  dignissimos omnis eius natus animi?
-                </p>
+              <div className="feature-cards-container flex space-x-4">
+                {/* Card for Technicians */}
+                <div className="card p-6 bg-white shadow-md rounded-lg">
+                  <h2 className="feature-title text-2xl nunito-bold mb-2">
+                    Work?
+                  </h2>
+                  <p>
+                    Receive customer requests, update your profile, and get
+                    reviewed by customers.
+                  </p>
+                </div>
+
+                {/* Card for Customers */}
+                <div className="card p-6 bg-white shadow-md rounded-lg">
+                  <h2 className="feature-title text-2xl nunito-bold mb-2">
+                    Hire your technician
+                  </h2>
+                  <p>
+                    Hire technicians, review them, and manage your service
+                    requests easily.
+                  </p>
+                </div>
               </div>
             </div>
             <div className="create-account rounded-lg bg-white py-10">
