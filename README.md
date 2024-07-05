@@ -93,3 +93,18 @@ npm install
 ```sh
 npm run dev
 ```
+
+## What I've learned?
+
+### Backend
+
+- Mongoose ODM
+- signing and verifying a json web token.
+- Sending emails and handling email confirmations
+- What is Middleware and how to use it.
+
+### Frontend
+
+- State Management using Context API.
+- Component life cycle.
+- Handling routes with Protected Routes.
