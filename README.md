@@ -65,6 +65,7 @@ In the src directory it is divided into two main parts, pages and components.
 ## How to run it:
 
 Open two consoles:
+
 In the first one:
 
 ```sh
