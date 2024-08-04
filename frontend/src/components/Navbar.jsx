@@ -60,7 +60,7 @@ export default function Navbar() {
                     </li>
                   )}
 
-                  {loggedUser?.role === "user" && (
+                  {/* {loggedUser?.role === "user" && (
                     <li className="lg:px-8 lg:py-0 py-2">
                       <a
                         onClick={menuListToggle}
@@ -70,7 +70,7 @@ export default function Navbar() {
                         Assigned Technicians
                       </a>
                     </li>
-                  )}
+                  )} */}
 
                   <li className="lg:px-8 lg:py-0 py-2">
                     <a
