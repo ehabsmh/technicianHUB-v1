@@ -60,9 +60,31 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path={"/"}
+                element={
+                  <ProtectedRoute>
+                    <ClientRoute>
+                      <ClientLanding />
+                    </ClientRoute>
+                  </ProtectedRoute>
+                }
+              />
 
               <Route
                 path="/tech"
+                element={
+                  <ProtectedRoute>
+                    <TechnicianRoute>
+                      <JobEstablish>
+                        <TechLanding />
+                      </JobEstablish>
+                    </TechnicianRoute>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/"
                 element={
                   <ProtectedRoute>
                     <TechnicianRoute>
