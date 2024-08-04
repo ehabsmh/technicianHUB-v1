@@ -1,12 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import AuthContext from "../../components/Global/AuthContext";
 
 export default function Profile() {
   const location = useLocation();
   const active = location.pathname;
-  const { loggedUser: technician } = useContext(AuthContext);
+  const { loggedUser: technician, refreshToken } = useContext(AuthContext);
   const { technicianDetails } = technician;
+
+  useEffect(() => {
+    refreshToken(localStorage.getItem("token"));
+  }, []);
 
   return (
     <>

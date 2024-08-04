@@ -87,23 +87,26 @@ export default function JobRequests() {
             </div>
             <div className="request-details p-7 grid grid-cols-2 w-4/5 mx-auto">
               <p className="pe-10 mb-5">
-                <span className="nunito-bold ">Name:</span>{" "}
-                {requestBy.firstName} {requestBy.lastName}{" "}
+                <span className="nunito-bold">Name:</span> {requestBy.firstName}{" "}
+                {requestBy.lastName}{" "}
               </p>
               <p className="pe-10 mb-5">
-                <span>Address:</span> {requestBy.address}
+                <span className="nunito-bold">Address:</span>{" "}
+                {requestBy.address}
               </p>
               <p className="pe-10 mb-5">
-                <span>Phone number:</span> {requestBy.phone}
+                <span className="nunito-bold">Phone number:</span>{" "}
+                {requestBy.phone}
               </p>
               <p className="pe-10 mb-5">
-                <span>Email:</span> {requestBy.email}
+                <span className="nunito-bold">Email:</span> {requestBy.email}
               </p>
               <p className="pe-10 mb-5">
-                <span>Title:</span> {activeJob.title}
+                <span className="nunito-bold">Title:</span> {activeJob.title}
               </p>
               <p>
-                <span>Description:</span> {activeJob.description}
+                <span className="nunito-bold">Description:</span>{" "}
+                {activeJob.description}
               </p>
               <div>
                 <button
