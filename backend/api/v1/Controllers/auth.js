@@ -1,6 +1,7 @@
-import User from "../../../models/users.js"
-import { compareSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { compareSync } from 'bcrypt'
+
+import User from "../../../models/users.js"
 import { sendEmail } from "../../../utils/sendEmail.js"
 import { FieldRequiredError } from "../../../utils/errorsHandler.js"
 import db from '../../../db/db.js';
@@ -8,6 +9,7 @@ import db from '../../../db/db.js';
 class AuthController {
   static async register(req, res) {
     const { role } = req.body
+
 
     try {
       req.body.email = req.body.email.toLowerCase();

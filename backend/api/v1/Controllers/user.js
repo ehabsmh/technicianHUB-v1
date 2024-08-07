@@ -5,7 +5,7 @@ class UserController {
     const techId = req.params.techId;
 
     const projection = {
-      firstName: 1, lastName: 1, picture: 1, technicianDetails: 1
+      firstName: 1, lastName: 1, image: 1, technicianDetails: 1
     }
 
     const technician = await User.findOne({ _id: techId, role: 'technician' }, projection);

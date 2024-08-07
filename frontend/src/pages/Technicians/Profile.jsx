@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import AuthContext from "../../components/Global/AuthContext";
+import axios from "axios";
 
 export default function Profile() {
   const location = useLocation();
@@ -8,7 +9,26 @@ export default function Profile() {
   const { loggedUser: technician, refreshToken } = useContext(AuthContext);
   const { technicianDetails } = technician;
 
+  const changeImage = async (e) => {
+    e.preventDefault();
+    try {
+      const oldToken = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("image", e.target.files[0]);
+
+      await axios.post(
+        "http://localhost:3000/api/v1/technicians/updateImage",
+        formData,
+        { headers: { token: oldToken } }
+      );
+      refreshToken(localStorage.getItem("token"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
+    console.log(technician);
     refreshToken(localStorage.getItem("token"));
   }, []);
 
@@ -17,11 +37,36 @@ export default function Profile() {
       <section className="container w-4/5 mx-auto relative">
         <div className="flex items-center space-x-4 p-3">
           <div className="tech-photo">
-            <img
-              src={"/assets/images/default.jpg"}
-              alt={`${technician.firstName} ${technician.lastName} photo`}
-              className="w-40 rounded-full "
-            />
+            {technician.image ? (
+              <>
+                <div className="image relative">
+                  <img
+                    src={`http://localhost:3000/${technician.image}`}
+                    alt={`${technician.firstName} ${technician.lastName} photo`}
+                    className="w-40 rounded-full min-h-40 max-h-40 cursor-pointer"
+                  />
+                  <label
+                    htmlFor="image"
+                    className="absolute top-0 bottom-0 left-0 right-0 cursor-pointer"
+                  >
+                    <input
+                      id="image"
+                      type="file"
+                      name="image"
+                      className="invisible"
+                      onChange={changeImage}
+                    />
+                  </label>
+                </div>
+              </>
+            ) : (
+              <img
+                src={"/assets/images/default.jpg"}
+                alt={`${technician.firstName} ${technician.lastName} photo`}
+                className="w-40 rounded-full min-h-40 max-h-40 cursor-pointer"
+              />
+            )}
+
             <p className="text-center nunito-medium text-lg">
               {technician.firstName} {technician.lastName}
             </p>

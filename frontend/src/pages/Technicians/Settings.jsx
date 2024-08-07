@@ -8,6 +8,7 @@ import axios from "axios";
 export default function Settings() {
   const { loggedUser, refreshToken } = useContext(AuthContext);
   const [updateInfo, setUpdateInfo] = useState(null);
+  const [image, setImage] = useState(null);
   const updatedTechnician = {};
   const layer = useRef(null);
   const salaryInput = useRef(null);
@@ -111,6 +112,7 @@ export default function Settings() {
           Edit
         </button>
       </div>
+
       <button
         className="bg-sec text-white p-2 rounded-md mt-10 hover:bg-sec-active"
         onClick={updateTechnician}

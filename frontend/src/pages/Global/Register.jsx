@@ -30,6 +30,7 @@ export default function Register() {
     } else {
       newUser[e.target.name] = e.target.value;
     }
+    newUser.image = "";
     newUser.role = userRole;
   };
 
@@ -288,15 +289,6 @@ export default function Register() {
                       required
                       className="register-inputs"
                       name="birthDate"
-                    />
-                    <label htmlFor="image" className="nunito-bold">
-                      Profile Picture
-                    </label>
-                    <input
-                      id="image"
-                      type="file"
-                      className="register-inputs"
-                      name="picture"
                     />
                     {userRole === "technician" ? <TechRegisterInputs /> : null}
                     <input type="checkbox" required />

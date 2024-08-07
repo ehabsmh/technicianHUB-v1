@@ -17,7 +17,7 @@ class DB {
 
     createUser(role, reqBody) {
         const { firstName, lastName, email, password, phone, address,
-            birthDate, picture } = reqBody;
+            birthDate } = reqBody;
 
         const requiredFields = [
             "firstName", "lastName", "email", "password", "phone",
@@ -38,7 +38,7 @@ class DB {
         const user = {
             firstName, lastName, email, password: hashed_pw,
             phone, address, birthDate: new Date(yyyy, mm, dd),
-            role, picture
+            role
         }
 
         if (role === 'user') {
@@ -53,6 +53,7 @@ class DB {
             if (!user.technicianDetails.bio) return 'bio';
         }
 
+        user.image = "";
         const newUser = new User(user);
 
         return newUser;

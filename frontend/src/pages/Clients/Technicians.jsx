@@ -39,7 +39,7 @@ export default function Technicians() {
         <h2 className="nunito-bold text-2xl mb-10">
           Choose the technician according to your need.
         </h2>
-        <div className="grid grid-cols-2 w-11/12">
+        <div className="grid grid-cols-2">
           <div className="category bg-slate-100 w-2/5 p-5 rounded-md min-h-96">
             <ul className="flex flex-col gap-y-5">
               <li>
@@ -78,7 +78,7 @@ export default function Technicians() {
           {!isLoading && !technicians.length ? (
             <p className="nunito-bold text-gray-400">No technicians found.</p>
           ) : (
-            <div className="technicians grid grid-cols-3 gap-10">
+            <div className="technicians grid grid-cols-3 gap-16">
               {technicians.map((technician, i) => (
                 <Technician key={i} technician={technician} />
               ))}

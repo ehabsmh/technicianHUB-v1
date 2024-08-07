@@ -20,7 +20,7 @@ const userSchema = new Schema({
     address: { type: String, required: true },
     birthDate: { type: Date, required: true },
     role: { type: String, required: true, enum: ['user', 'technician'] },
-    picture: { type: String },
+    image: { type: String },
     customerDetails: {
         type: new Schema({
             assignedTechIds: [{ type: Types.ObjectId, ref: 'User' }]
