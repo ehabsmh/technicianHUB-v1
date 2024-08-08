@@ -1,6 +1,17 @@
 import mongoose, { Types } from "mongoose";
 import { Schema } from "mongoose";
 
+const jobDetailsSchema = new Schema({
+  requestNo: {
+    type: Types.ObjectId,
+    ref: 'job_request',
+    required: true,
+  },
+  title: String,
+  description: String,
+
+}, { _id: false });
+
 const jobStateSchema = new Schema({
   techId: {
     type: Types.ObjectId,
@@ -26,11 +37,8 @@ const jobStateSchema = new Schema({
       message: props => `${props.value} Is not a valid client ID`
     }
   },
-  requestNo: {
-    type: Types.ObjectId,
-    ref: 'job_request',
-    required: true,
-    // unique: true
+  jobDetails: {
+    type: jobDetailsSchema
   },
   status: {
     type: String,
