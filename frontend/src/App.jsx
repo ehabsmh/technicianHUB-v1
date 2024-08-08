@@ -24,6 +24,7 @@ import Settings from "./pages/Technicians/Settings";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 import ClientRoute from "./components/ProtectedRoutes/ClientsRoute";
 import TechnicianRoute from "./components/ProtectedRoutes/TechnicianRoute";
+import CompletedJobs from "./pages/Clients/CompletedJobs";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -194,6 +195,16 @@ function App() {
                     <ProtectedRoute>
                       <ClientRoute>
                         <TechnicianReviews />
+                      </ClientRoute>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="completed-jobs"
+                  element={
+                    <ProtectedRoute>
+                      <ClientRoute>
+                        <CompletedJobs />
                       </ClientRoute>
                     </ProtectedRoute>
                   }
