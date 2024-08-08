@@ -22,9 +22,13 @@ class JobStateController {
       const jobState = await JobState.create({
         techId,
         userId: jobReq.requestBy,
-        requestNo,
+        jobDetails: {
+          requestNo,
+          title: jobReq.title,
+          description: jobReq.description
+        },
         status: 'pending'
-      });
+      },);
 
       res.status(201).json({ message: 'Job request successfully accepted', jobState });
     } catch (error) {
@@ -53,9 +57,9 @@ class JobStateController {
     jobState.save();
 
     const token = jwt.sign({ user, jobState }, process.env.JWT_CONFIRM_EMAIL_SECRET);
-    const emailSent = await sendCompleteJobEmail(user, token);
+    await sendCompleteJobEmail(user, token);
 
-    res.json({ message: 'Email sent to the user to confirm job completion', jobReq: jobState.requestNo });
+    res.json({ message: 'Email sent to the user to confirm job completion' });
   }
 
   static async completeJobRequest(req, res) {
@@ -89,6 +93,19 @@ class JobStateController {
       res.json({ status: jobState.status });
     } catch (error) {
       res.status(400).json({ error: error.message });
+    }
+  }
+
+  static async getCompletedJobs(req, res) {
+    const { techId } = req.params;
+    try {
+      const completedJobs = await JobState.find({ techId, status: 'completed' }, { jobDetails: 1 });
+      if (!completedJobs) {
+        res.status(404).json({ completedJobs: [] });
+      }
+      res.json({ completedJobs });
+    } catch (error) {
+      console.log(error);
     }
   }
 }

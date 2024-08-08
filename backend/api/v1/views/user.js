@@ -38,5 +38,10 @@ userRouter.delete('/technicians/reviews/:reviewId', userAuthorizations,
 userRouter.post('/jobRequests', userAuthorizations, JobRequestController.createJobRequest);
 
 // Confirm job completion
-userRouter.get('/confirmJobCompletion/:token', userAuthorizations, JobStateController.completeJobRequest);
+userRouter.get('/confirmJobCompletion/:token',
+  userAuthorizations, JobStateController.completeJobRequest);
+
+// Get technician completed jobs
+userRouter.get('/technicians/:techId/completedJobs',
+  userAuthorizations, JobStateController.getCompletedJobs);
 export default userRouter;
