@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import "../../styles/technician.css";
 import Technician from "../../components/Clients/Technician";
 import axios from "axios";
@@ -11,6 +11,8 @@ export default function Technicians() {
   const [technicians, setTechnicians] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { service } = useParams();
+  const location = useLocation();
+  const active = location.pathname;
 
   useEffect(() => {
     const getTechniciansByService = async () => {
@@ -45,7 +47,9 @@ export default function Technicians() {
               <li>
                 <Link
                   to={"/technicians/plumber"}
-                  className="hover:text-sec nunito-medium duration-200"
+                  className={`hover:text-sec nunito-medium duration-200 ${
+                    active.includes("plumber") ? "text-sec" : ""
+                  }`}
                 >
                   Plumbers
                 </Link>
@@ -53,7 +57,9 @@ export default function Technicians() {
               <li>
                 <Link
                   to={"/technicians/fridges technician"}
-                  className="hover:text-sec nunito-medium duration-200"
+                  className={`hover:text-sec nunito-medium duration-200 ${
+                    active.includes("fridges") ? "text-sec" : ""
+                  }`}
                 >
                   Fridges Technician
                 </Link>
@@ -61,7 +67,9 @@ export default function Technicians() {
               <li>
                 <Link
                   to={"/technicians/air conditions technician"}
-                  className="hover:text-sec nunito-medium duration-200"
+                  className={`hover:text-sec nunito-medium duration-200 ${
+                    active.includes("air") ? "text-sec" : ""
+                  }`}
                 >
                   Air Conditions Technician
                 </Link>

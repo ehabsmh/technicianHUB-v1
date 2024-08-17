@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "../styles/nav.css";
 import { useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "./Global/AuthContext";
 
 export default function Navbar() {
@@ -14,6 +14,9 @@ export default function Navbar() {
   };
   const { loggedUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const active = location.pathname;
+  console.log(active);
 
   return (
     <>
@@ -42,7 +45,13 @@ export default function Navbar() {
                       to={
                         loggedUser?.role === "technician" ? "/tech" : "/client"
                       }
-                      className="hover:text-sec duration-300"
+                      className={`hover:text-sec duration-300 ${
+                        active.includes("/tech") ||
+                        active.includes("/client") ||
+                        active === "/"
+                          ? "text-sec"
+                          : ""
+                      }`}
                     >
                       Home
                     </Link>
@@ -52,8 +61,9 @@ export default function Navbar() {
                       <Link
                         to="/technicians/plumber"
                         onClick={menuListToggle}
-                        href="#"
-                        className="hover:text-sec duration-300"
+                        className={`hover:text-sec duration-300 ${
+                          active.includes("/plumber") ? "text-sec" : ""
+                        }`}
                       >
                         Technicians
                       </Link>
@@ -75,7 +85,6 @@ export default function Navbar() {
                   <li className="lg:px-8 lg:py-0 py-2">
                     <a
                       onClick={menuListToggle}
-                      href="#"
                       className="hover:text-sec duration-300"
                     >
                       About
@@ -85,7 +94,6 @@ export default function Navbar() {
                   <li className="lg:px-8 lg:py-0 py-2">
                     <a
                       onClick={menuListToggle}
-                      href="#"
                       className="hover:text-sec duration-300"
                     >
                       Contact
@@ -97,8 +105,7 @@ export default function Navbar() {
                         menuListToggle();
                         logout(navigate);
                       }}
-                      href="#"
-                      className="hover:text-sec duration-300"
+                      className="hover:text-sec duration-300 cursor-pointer"
                     >
                       Logout
                     </a>
@@ -110,7 +117,9 @@ export default function Navbar() {
                     <Link
                       onClick={menuListToggle}
                       to="/login"
-                      className="hover:text-sec duration-300"
+                      className={`hover:text-sec duration-300 ${
+                        active.includes("/login") ? "text-sec" : ""
+                      }`}
                     >
                       Login
                     </Link>
@@ -119,7 +128,9 @@ export default function Navbar() {
                     <Link
                       onClick={menuListToggle}
                       to="/register"
-                      className="hover:text-sec duration-300"
+                      className={`hover:text-sec duration-300 ${
+                        active.includes("/register") ? "text-sec" : ""
+                      }`}
                     >
                       Register
                     </Link>
