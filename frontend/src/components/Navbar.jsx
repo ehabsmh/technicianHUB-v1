@@ -46,8 +46,8 @@ export default function Navbar() {
                         loggedUser?.role === "technician" ? "/tech" : "/client"
                       }
                       className={`hover:text-sec duration-300 ${
-                        active.includes("/tech") ||
-                        active.includes("/client") ||
+                        active.endsWith("/tech") ||
+                        active.endsWith("/client") ||
                         active === "/"
                           ? "text-sec"
                           : ""
@@ -62,7 +62,7 @@ export default function Navbar() {
                         to="/technicians/plumber"
                         onClick={menuListToggle}
                         className={`hover:text-sec duration-300 ${
-                          active.includes("/plumber") ? "text-sec" : ""
+                          active.startsWith("/technicians/") ? "text-sec" : ""
                         }`}
                       >
                         Technicians
@@ -83,6 +83,18 @@ export default function Navbar() {
                   )} */}
 
                   <li className="lg:px-8 lg:py-0 py-2">
+                    <Link
+                      to={"/chats"}
+                      onClick={menuListToggle}
+                      className={`hover:text-sec duration-300 ${
+                        active.startsWith("/chats") ? "text-sec" : ""
+                      }`}
+                    >
+                      Chats
+                    </Link>
+                  </li>
+
+                  {/* <li className="lg:px-8 lg:py-0 py-2">
                     <a
                       onClick={menuListToggle}
                       className="hover:text-sec duration-300"
@@ -98,7 +110,7 @@ export default function Navbar() {
                     >
                       Contact
                     </a>
-                  </li>
+                  </li> */}
                   <li className="lg:px-3  lg:py-0 py-2">
                     <a
                       onClick={() => {

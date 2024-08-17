@@ -25,6 +25,7 @@ import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 import ClientRoute from "./components/ProtectedRoutes/ClientsRoute";
 import TechnicianRoute from "./components/ProtectedRoutes/TechnicianRoute";
 import CompletedJobs from "./pages/Clients/CompletedJobs";
+import Chats from "./pages/Global/Chats";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -245,6 +246,14 @@ function App() {
                 element={
                   <JobEstablish>
                     <Login />
+                  </JobEstablish>
+                }
+              />
+              <Route
+                path="/chats"
+                element={
+                  <JobEstablish>
+                    <Chats />
                   </JobEstablish>
                 }
               />

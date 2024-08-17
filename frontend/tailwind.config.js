@@ -15,6 +15,10 @@ export default {
         'heading-color': "#3e5055",
         'sec-active': "#255d6f"
       },
+      height: {
+        '80vh': "80vh",
+        '60vh': "60vh",
+      }
     },
   },
   plugins: [],
