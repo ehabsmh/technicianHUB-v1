@@ -22,7 +22,8 @@
     "react-dom": "^18.3.1",
     "react-rating": "^2.0.5",
     "react-router-dom": "^6.24.0",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
