@@ -9,7 +9,7 @@ export default function Chats() {
         <div className="chats border-r-2 border-sec space-y-5 col-span-1 bg-gray-100 p-5 rounded-md h-80vh overflow-y-scroll">
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -17,7 +17,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -25,7 +25,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -33,7 +33,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -41,7 +41,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -49,7 +49,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -57,7 +57,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -65,7 +65,7 @@ export default function Chats() {
           </Link>
           <Link className="person flex items-center space-x-4 hover:bg-gray-200 rounded-md duration-300">
             <img
-              src="../../../public/assets/images/default.jpg"
+              src="/assets/images/default.jpg"
               alt=""
               className="w-16 rounded-full"
             />
@@ -76,7 +76,7 @@ export default function Chats() {
           <div className="messages space-y-8 h-60vh overflow-y-scroll relative">
             <div className="me flex items-end ">
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
@@ -93,14 +93,14 @@ export default function Chats() {
                 veritatis.
               </p>
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
             </div>
             <div className="me flex items-end ">
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
@@ -117,14 +117,38 @@ export default function Chats() {
                 veritatis.
               </p>
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
+                alt=""
+                className="w-16 h-16 rounded-full"
+              />
+            </div>
+            <div className="me flex items-end">
+              <img
+                src="/assets/images/default.jpg"
+                alt=""
+                className="w-16 h-16 rounded-full"
+              />
+              <p className="bg-sec text-white p-2 rounded-lg ml-4 w-1/3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+                consequuntur, laborum deserunt ratione blanditiis dicta?
+              </p>
+            </div>
+            <div className="receiver flex items-end justify-end ">
+              <p className="bg-sec text-white p-2 rounded-lg mr-4 w-1/3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+                consequuntur, laborum deserunt ratione blanditiis dicta? Lorem
+                ipsum dolor sit amet consectetur adipisicing elit. Suscipit,
+                veritatis.
+              </p>
+              <img
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
             </div>
             <div className="me flex items-end ">
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
@@ -141,14 +165,14 @@ export default function Chats() {
                 veritatis.
               </p>
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
             </div>
             <div className="me flex items-end ">
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
@@ -165,14 +189,14 @@ export default function Chats() {
                 veritatis.
               </p>
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
             </div>
             <div className="me flex items-end ">
               <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />
@@ -189,31 +213,7 @@ export default function Chats() {
                 veritatis.
               </p>
               <img
-                src="../../../public/assets/images/default.jpg"
-                alt=""
-                className="w-16 h-16 rounded-full"
-              />
-            </div>
-            <div className="me flex items-end ">
-              <img
-                src="../../../public/assets/images/default.jpg"
-                alt=""
-                className="w-16 h-16 rounded-full"
-              />
-              <p className="bg-sec text-white p-2 rounded-lg ml-4 w-1/3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-                consequuntur, laborum deserunt ratione blanditiis dicta?
-              </p>
-            </div>
-            <div className="receiver flex items-end justify-end ">
-              <p className="bg-sec text-white p-2 rounded-lg mr-4 w-1/3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-                consequuntur, laborum deserunt ratione blanditiis dicta? Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Suscipit,
-                veritatis.
-              </p>
-              <img
-                src="../../../public/assets/images/default.jpg"
+                src="/assets/images/default.jpg"
                 alt=""
                 className="w-16 h-16 rounded-full"
               />

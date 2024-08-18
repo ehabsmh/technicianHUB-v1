@@ -26,7 +26,7 @@ import ClientRoute from "./components/ProtectedRoutes/ClientsRoute";
 import TechnicianRoute from "./components/ProtectedRoutes/TechnicianRoute";
 import CompletedJobs from "./pages/Clients/CompletedJobs";
 import Chats from "./pages/Global/Chats";
-
+import { socket } from "./socket.js";
 function App() {
   const [loading, setLoading] = useState(true);
   const [inJob, setInJob] = useState(false);
@@ -185,7 +185,7 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ClientRoute>
-                      <Technician />
+                      <Technician socket={socket} />
                     </ClientRoute>
                   </ProtectedRoute>
                 }

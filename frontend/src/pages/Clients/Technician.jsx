@@ -12,11 +12,13 @@ import "../../styles/register.css";
 import TechnicianContext from "../../components/Global/Store";
 import HireTechnician from "../../components/Clients/HireTechnician";
 import AuthContext from "../../components/Global/AuthContext";
+import ChatBox from "../../components/Global/ChatBox";
 
-export default function Technician() {
+export default function Technician({ socket }) {
   const [technician, setTechnician] = useState({});
   const [hire, setHire] = useState(false);
   const [hired, setHired] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const { id } = useParams();
   const location = useLocation();
   const active = location.pathname;
@@ -139,16 +141,21 @@ export default function Technician() {
               </button>
             ) : (
               <button
-                className="w-36 py-3 px-5 mr-11 bg-sec text-center register-buttons text-white hover:bg-sec-active"
+                className="w-40 py-3 px-5 mr-11 bg-sec text-center register-buttons text-white hover:bg-sec-active"
                 onClick={handleHire}
               >
                 Hire
               </button>
             )}
 
-            <Link className="py-3 px-5 mr-11 register-buttons bg-sec text-center hover:bg-sec-active">
-              <button className="w-32">Send message</button>
-            </Link>
+            <button
+              className="w-40 py-3 px-5 mr-11 register-buttons bg-sec text-center hover:bg-sec-active"
+              onClick={() => {
+                setChatOpen(true);
+              }}
+            >
+              Send message
+            </button>
           </div>
           <nav className="mt-16 mb-7 relative before:absolute before:-top-5 before:bg-slate-200 before:h-0.5 before:w-full">
             <ul className="flex w-1/3 justify-between p-5 items-center">
@@ -190,6 +197,9 @@ export default function Technician() {
             <Outlet />
           </div>
         </section>
+        {chatOpen ? (
+          <ChatBox setChatOpen={setChatOpen} socket={socket} />
+        ) : null}
       </TechnicianContext.Provider>
     </>
   );
