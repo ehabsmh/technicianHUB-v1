@@ -1,13 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import AuthContext from "../../components/Global/AuthContext";
 import axios from "axios";
+import { socket } from "../../socket";
 
 export default function Profile() {
   const location = useLocation();
   const active = location.pathname;
   const { loggedUser: technician, refreshToken } = useContext(AuthContext);
   const { technicianDetails } = technician;
+  const [newChat, setNewChat] = useState(false);
 
   const changeImage = async (e) => {
     e.preventDefault();
@@ -28,8 +30,17 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    console.log(technician);
     refreshToken(localStorage.getItem("token"));
+
+    socket.on("chat message", (data) => {
+      if (data.receiverId !== technician._id) {
+        return;
+      }
+    });
+
+    socket.on("new-chat", (data) => {
+      setNewChat(true);
+    });
   }, []);
 
   return (
@@ -105,6 +116,24 @@ export default function Profile() {
             >
               <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
                 Bio
+              </li>
+            </Link>
+            <Link
+              onClick={() => {
+                setNewChat(false);
+              }}
+              to={"chats"}
+              className={`technician_profile-link relative ${
+                active.includes("chats") ? "bg-slate-200" : ""
+              }`}
+            >
+              <div
+                className={`absolute bg-sec top-0 right-1 w-3 h-3 rounded-full ${
+                  newChat ? "" : "hidden"
+                }`}
+              ></div>
+              <li className="p-10 h-12 flex items-center hover:bg-slate-200 duration-300 rounded-md">
+                Chats
               </li>
             </Link>
             <Link

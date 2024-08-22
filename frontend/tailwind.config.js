@@ -18,6 +18,9 @@ export default {
       height: {
         '80vh': "80vh",
         '60vh': "60vh",
+      },
+      minHeight: {
+        '44vh': "44vh"
       }
     },
   },

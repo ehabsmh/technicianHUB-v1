@@ -8,7 +8,6 @@ import axios from "axios";
 export default function Settings() {
   const { loggedUser, refreshToken } = useContext(AuthContext);
   const [updateInfo, setUpdateInfo] = useState(null);
-  const [image, setImage] = useState(null);
   const updatedTechnician = {};
   const layer = useRef(null);
   const salaryInput = useRef(null);
@@ -44,7 +43,6 @@ export default function Settings() {
 
   return (
     <>
-      {/* Change Bio */}
       <div
         className="layer absolute bg-slate-200 rounded-md top-0 bottom-0 left-0
        right-0 flex flex-col items-center p-5 opacity-0 -z-20 duration-300"

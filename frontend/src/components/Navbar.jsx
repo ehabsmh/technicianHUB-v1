@@ -81,18 +81,32 @@ export default function Navbar() {
                       </a>
                     </li>
                   )} */}
-
-                  <li className="lg:px-8 lg:py-0 py-2">
-                    <Link
-                      to={"/chats"}
-                      onClick={menuListToggle}
-                      className={`hover:text-sec duration-300 ${
-                        active.startsWith("/chats") ? "text-sec" : ""
-                      }`}
-                    >
-                      Chats
-                    </Link>
-                  </li>
+                  {loggedUser.role === "technician" && (
+                    <li className="lg:px-8 lg:py-0 py-2">
+                      <Link
+                        to={"/chats"}
+                        onClick={menuListToggle}
+                        className={`hover:text-sec duration-300 ${
+                          active.startsWith("/chats") ? "text-sec" : ""
+                        }`}
+                      >
+                        Chats
+                      </Link>
+                    </li>
+                  )}
+                  {loggedUser.role === "client" && (
+                    <li className="lg:px-8 lg:py-0 py-2">
+                      <Link
+                        to={"/inbox"}
+                        onClick={menuListToggle}
+                        className={`hover:text-sec duration-300 ${
+                          active.startsWith("/chats") ? "text-sec" : ""
+                        }`}
+                      >
+                        Chats
+                      </Link>
+                    </li>
+                  )}
 
                   {/* <li className="lg:px-8 lg:py-0 py-2">
                     <a

@@ -86,11 +86,12 @@ class JobStateController {
   static async jobStatus(req, res) {
     const { jobId } = req.params;
     try {
-      const jobState = await JobState.findById(jobId, { status: 1 });
+      const jobState = await JobState.findById(jobId, { status: 1, userId: 1 });
       if (!jobState) {
         return res.status(404).json({ error: 'Job not found' });
       }
-      res.json({ status: jobState.status });
+      console.log(jobState);
+      res.json({ status: jobState.status, userId: jobState.userId });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

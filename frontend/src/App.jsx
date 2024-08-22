@@ -25,8 +25,10 @@ import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 import ClientRoute from "./components/ProtectedRoutes/ClientsRoute";
 import TechnicianRoute from "./components/ProtectedRoutes/TechnicianRoute";
 import CompletedJobs from "./pages/Clients/CompletedJobs";
-import Chats from "./pages/Global/Chats";
+// import Chats from "./pages/Global/Chats";
 import { socket } from "./socket.js";
+import Chats from "./pages/Technicians/Chats";
+import ClientChats from "./pages/Clients/Chats";
 function App() {
   const [loading, setLoading] = useState(true);
   const [inJob, setInJob] = useState(false);
@@ -116,6 +118,18 @@ function App() {
                       <TechnicianRoute>
                         <JobEstablish>
                           <TechnicianBio />
+                        </JobEstablish>
+                      </TechnicianRoute>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="chats"
+                  element={
+                    <ProtectedRoute>
+                      <TechnicianRoute>
+                        <JobEstablish>
+                          <Chats />
                         </JobEstablish>
                       </TechnicianRoute>
                     </ProtectedRoute>
@@ -253,7 +267,9 @@ function App() {
                 path="/chats"
                 element={
                   <JobEstablish>
-                    <Chats />
+                    <TechnicianRoute>
+                      <Chats />
+                    </TechnicianRoute>
                   </JobEstablish>
                 }
               />
@@ -265,7 +281,7 @@ function App() {
                   </JobEstablish>
                 }
               />
-              {/* <Route path="*" element=<p>404 not found</p> /> */}
+              <Route path="*" element=<p>404 not found</p> />
               <Route
                 path="/confirm-email"
                 element={

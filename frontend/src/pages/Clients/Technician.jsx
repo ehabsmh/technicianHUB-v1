@@ -14,7 +14,7 @@ import HireTechnician from "../../components/Clients/HireTechnician";
 import AuthContext from "../../components/Global/AuthContext";
 import ChatBox from "../../components/Global/ChatBox";
 
-export default function Technician({ socket }) {
+export default function Technician() {
   const [technician, setTechnician] = useState({});
   const [hire, setHire] = useState(false);
   const [hired, setHired] = useState(false);
@@ -197,9 +197,7 @@ export default function Technician({ socket }) {
             <Outlet />
           </div>
         </section>
-        {chatOpen ? (
-          <ChatBox setChatOpen={setChatOpen} socket={socket} />
-        ) : null}
+        {chatOpen ? <ChatBox setChatOpen={setChatOpen} /> : null}
       </TechnicianContext.Provider>
     </>
   );

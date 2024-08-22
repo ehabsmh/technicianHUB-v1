@@ -6,10 +6,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import JobConfirm from "../../components/Technicians/JobConfirm";
 import JobCompleted from "../../components/Technicians/JobCompleted";
+import ChatBox from "../../components/Technicians/ChatBox";
 
 export default function Job(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [jobStatus, setJobStatus] = useState("pending");
+  const [jobFor, setJobFor] = useState(null);
+  const [chatOpen, setChatOpen] = useState(false);
   const [barProgress, setBarProgress] = useState("before:right-100");
   const { jobId } = useParams();
 
@@ -21,6 +24,7 @@ export default function Job(props) {
       );
 
       setJobStatus(data.status);
+      setJobFor(data.userId);
     } catch (error) {
       console.log(error);
     }
@@ -29,6 +33,7 @@ export default function Job(props) {
   useEffect(() => {
     checkJobStatus();
   });
+
   useEffect(() => {
     props.setInJob(true);
   }, []);
@@ -51,6 +56,9 @@ export default function Job(props) {
 
   return (
     <>
+      {chatOpen ? (
+        <ChatBox setChatOpen={setChatOpen} senderId={jobFor} />
+      ) : null}
       <div className="flex justify-center mt-10">
         <Spinner spinnerColor="#388DA8" loading={isLoading} spinnerSize={80} />
       </div>
@@ -84,7 +92,12 @@ export default function Job(props) {
                 <button className="register-inputs bg-white w-36 mr-3 hover:bg-heading-color hover:text-white duration-150">
                   Call Customer
                 </button>
-                <button className="register-inputs bg-white w-36 hover:bg-heading-color hover:text-white duration-150">
+                <button
+                  onClick={() => {
+                    setChatOpen(true);
+                  }}
+                  className="register-inputs bg-white w-36 hover:bg-heading-color hover:text-white duration-150"
+                >
                   Send message
                 </button>
               </div>
